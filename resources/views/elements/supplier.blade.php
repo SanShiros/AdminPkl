@@ -1,46 +1,46 @@
+
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
-  <!-- [Head] start -->
 
-  <head>
-    <title>Feather Icon Pack | Datta Able Dashboard Template</title>
-    <!-- [Meta] -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="description"
-      content="Datta Able is trending dashboard template made using Bootstrap 5 design framework. Datta Able is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies."
-    />
-    <meta
-      name="keywords"
-      content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard"
-    />
-    <meta name="author" content="CodedThemes" />
+<head>
+  <title>Typography | Datta Able Dashboard Template</title>
+  <!-- [Meta] -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="description"
+    content="Datta Able is trending dashboard template made using Bootstrap 5 design framework. Datta Able is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies."
+  />
+  <meta
+    name="keywords"
+    content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard"
+  />
+  <meta name="author" content="CodedThemes" />
 
-    <!-- [Favicon] icon -->
-    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon" />
-  <!-- [Font] Family -->
- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-<!-- [phosphor Icons] https://phosphoricons.com/ -->
-<link rel="stylesheet" href="../assets/fonts/phosphor/duotone/style.css" />
-<!-- [Tabler Icons] https://tablericons.com -->
-<link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css" />
-<!-- [Feather Icons] https://feathericons.com -->
-<link rel="stylesheet" href="../assets/fonts/feather.css" />
-<!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-<link rel="stylesheet" href="../assets/fonts/fontawesome.css" />
-<!-- [Material Icons] https://fonts.google.com/icons -->
-<link rel="stylesheet" href="../assets/fonts/material.css" />
-<!-- [Template CSS Files] -->
-<link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+  <!-- [Favicon] icon -->
+  <link rel="icon" href="/images/favicon.svg" type="image/x-icon" />
 
-  </head>
-  <!-- [Head] end -->
-  <!-- [Body] Start -->
+   <!-- [Font] Family -->
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- [phosphor Icons] https://phosphoricons.com/   -->
+  <link rel="stylesheet" href="/fonts/phosphor/duotone/style.css" />
+  <!-- [Tabler Icons] https://tablericons.com   -->
+  <link rel="stylesheet" href="/fonts/tabler-icons.min.css" />
+  <!-- [Feather Icons] https://feathericons.com   -->
+  <link rel="stylesheet" href="/fonts/feather.css" />
+  <!-- [Font Awesome Icons] https://fontawesome.com/icons   -->
+  <link rel="stylesheet" href="/fonts/fontawesome.css" />
+  <!-- [Material Icons] https://fonts.google.com/icons   -->
+  <link rel="stylesheet" href="/fonts/material.css" />
+  <!-- [Template CSS Files] -->
+  <link rel="stylesheet" href="/css/style.css" id="main-style-link" />
 
-  <body>
-    <!-- [ Pre-loader ] start -->
+</head>
+
+<body>
+
+  <!-- [ Pre-loader ] start -->
 <div class="loader-bg fixed inset-0 bg-white dark:bg-themedark-cardbg z-[1034]">
   <div class="loader-track h-[5px] w-full inline-block absolute overflow-hidden top-0">
     <div class="loader-fill w-[300px] h-[5px] bg-primary-500 absolute top-0 left-0 animate-[hitZak_0.6s_ease-in-out_infinite_alternate]"></div>
@@ -51,10 +51,10 @@
 <nav class="pc-sidebar">
   <div class="navbar-wrapper">
     <div class="m-header flex items-center py-4 px-6 h-header-height">
-      <a href="../dashboard/index.html" class="b-brand flex items-center gap-3">
+      <a href="/dashboard/index.html" class="b-brand flex items-center gap-3">
         <!-- ========   Change your logo from here   ============ -->
-        <img src="../assets/images/logo-white.svg" class="img-fluid logo logo-lg" alt="logo" />
-        <img src="../assets/images/favicon.svg" class="img-fluid logo logo-sm" alt="logo" />
+        <img src="/images/logo-white.svg" class="img-fluid logo logo-lg" alt="logo" />
+        <img src="/images/favicon.svg" class="img-fluid logo logo-sm" alt="logo" />
       </a>
     </div>
     <div class="navbar-content h-[calc(100vh_-_74px)] py-2.5">
@@ -64,7 +64,7 @@
         </li>
         <li class="pc-item">
         <li class="pc-item">
-          <a href="../dashboard/index.html" class="pc-link">
+          <a href="/dashboard/index.html" class="pc-link">
             <span class="pc-micon">
               <i data-feather="home"></i>
             </span>
@@ -76,19 +76,19 @@
           <i data-feather="feather"></i>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="../elements/bc_color.html" class="pc-link">
+          <a href="/elements/bc_color.html" class="pc-link">
             <span class="pc-micon"> <i data-feather="edit"></i></span>
             <span class="pc-mtext">Color</span>
           </a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="../elements/bc_typography.html" class="pc-link">
+          <a href="/elements/bc_typography.html" class="pc-link">
             <span class="pc-micon"> <i data-feather="type"></i></span>
             <span class="pc-mtext">Typography</span>
           </a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="../elements/icon-feather.html" class="pc-link">
+          <a href="/elements/icon-feather.html" class="pc-link">
             <span class="pc-micon"> <i data-feather="feather"></i></span>
             <span class="pc-mtext">Icons</span>
           </a>
@@ -99,13 +99,13 @@
           <i data-feather="monitor"></i>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="../pages/login-v1.html" class="pc-link" target="_blank">
+          <a href="/pages/login-v1.html" class="pc-link" target="_blank">
             <span class="pc-micon"> <i data-feather="lock"></i></span>
             <span class="pc-mtext">Login</span>
           </a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="../pages/register-v1.html" class="pc-link" target="_blank">
+          <a href="/pages/register-v1.html" class="pc-link" target="_blank">
             <span class="pc-micon"> <i data-feather="user-plus"></i></span>
             <span class="pc-mtext">Register</span>
           </a>
@@ -150,7 +150,7 @@
           </ul>
         </li>
         <li class="pc-item">
-          <a href="../other/sample-page.html" class="pc-link">
+          <a href="/other/sample-page.html" class="pc-link">
             <span class="pc-micon">
               <i data-feather="sidebar"></i>
             </span>
@@ -260,7 +260,7 @@
             <div class="card-body">
               <div class="flex gap-4">
                 <div class="shrink-0">
-                  <img class="img-radius w-12 h-12 rounded-0" src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
+                  <img class="img-radius w-12 h-12 rounded-0" src="/images/user/avatar-1.jpg" alt="Generic placeholder image" />
                 </div>
                 <div class="grow">
                   <span class="float-end text-sm text-muted">2 min ago</span>
@@ -278,7 +278,7 @@
             <div class="card-body">
               <div class="flex gap-4">
                 <div class="shrink-0">
-                  <img class="img-radius w-12 h-12 rounded-0" src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image" />
+                  <img class="img-radius w-12 h-12 rounded-0" src="/images/user/avatar-2.jpg" alt="Generic placeholder image" />
                 </div>
                 <div class="grow">
                   <span class="float-end text-sm text-muted">1 hour ago</span>
@@ -293,7 +293,7 @@
             <div class="card-body">
               <div class="flex gap-4">
                 <div class="shrink-0">
-                  <img class="img-radius w-12 h-12 rounded-0" src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image" />
+                  <img class="img-radius w-12 h-12 rounded-0" src="/images/user/avatar-3.jpg" alt="Generic placeholder image" />
                 </div>
                 <div class="grow ms-3">
                   <span class="float-end text-sm text-muted">2 hour ago</span>
@@ -311,7 +311,7 @@
             <div class="card-body">
               <div class="flex gap-4">
                 <div class="shrink-0">
-                  <img class="img-radius w-12 h-12 rounded-0" src="../assets/images/user/avatar-4.jpg" alt="Generic placeholder image" />
+                  <img class="img-radius w-12 h-12 rounded-0" src="/images/user/avatar-4.jpg" alt="Generic placeholder image" />
                 </div>
                 <div class="grow ms-3">
                   <span class="float-end text-sm text-muted">12 hour ago</span>
@@ -330,7 +330,7 @@
             <div class="card-body">
               <div class="flex gap-4">
                 <div class="shrink-0">
-                  <img class="img-radius w-12 h-12 rounded-0" src="../assets/images/user/avatar-5.jpg" alt="Generic placeholder image" />
+                  <img class="img-radius w-12 h-12 rounded-0" src="/images/user/avatar-5.jpg" alt="Generic placeholder image" />
                 </div>
                 <div class="grow ms-3">
                   <span class="float-end text-sm text-muted">5 hour ago</span>
@@ -361,7 +361,7 @@
         <div class="dropdown-header flex items-center justify-between py-4 px-5 bg-primary-500">
           <div class="flex mb-1 items-center">
             <div class="shrink-0">
-              <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="w-10 rounded-full" />
+              <img src="/images/user/avatar-2.jpg" alt="user-image" class="w-10 rounded-full" />
             </div>
             <div class="grow ms-3">
               <h6 class="mb-1 text-white">Carson Darrin 🖖</h6>
@@ -414,80 +414,252 @@
 
 
 
-    <!-- [ Main Content ] start -->
-    <div class="pc-container">
-      <div class="pc-content">
-        <!-- [ breadcrumb ] start -->
-        <div class="page-header">
-          <div class="page-block">
-            <div class="page-header-title">
-              <h5 class="mb-0 font-medium">Feather Icon</h5>
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="page-header-title">
+            <h5 class="mb-0 font-medium">Typography</h5>
+          </div>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard/index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0)">Basic UI</a></li>
+            <li class="breadcrumb-item" aria-current="page">Typography</li>
+          </ul>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+      <!-- [ Main Content ] start -->
+      <div class="grid grid-cols-12 gap-6">
+        <!-- [ Typography ] start -->
+        <div class="col-span-12">
+          <div class="card">
+            <div class="card-header">
+              <h5>Headings</h5>
             </div>
-            <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-              <li class="breadcrumb-item"><a href="javascript: void(0)">Icons</a></li>
-              <li class="breadcrumb-item" aria-current="page">Feather Icon</li>
-            </ul>
+            <div class="card-body pc-component">
+              <h1>h1. Heading</h1>
+              <div class="clearfix"></div>
+              <h2>h2. Heading</h2>
+              <div class="clearfix"></div>
+              <h3>This is a H3</h3>
+              <div class="clearfix"></div>
+              <h4>This is a H4</h4>
+              <div class="clearfix"></div>
+              <h5>This is a H5</h5>
+              <div class="clearfix"></div>
+              <h6>This is a H6</h6>
+            </div>
           </div>
         </div>
-        <!-- [ breadcrumb ] end -->
-
-
-        <!-- [ Main Content ] start -->
-        <div class="grid grid-cols-12 gap-6">
-          <!-- [ sample-page ] start -->
-          <div class="col-span-12">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-2">Feather Icon</h5>
-                <p>
-                  Use svg icon with
-                  <code class="text-danger-400 text-sm">&lt;i data-feather="&lt;&lt; Copied code &gt;&gt;"&gt;</code>
-                  in you html code
+        <div class="col-span-12 md:col-span-6">
+          <div class="card">
+            <div class="card-header">
+              <h5>Inline Text Elements</h5>
+            </div>
+            <div class="card-body pc-component">
+              <p class="lead m-t-0">Your title goes here</p>
+              You can use the mark tag to
+              <mark>highlight</mark>
+              text.
+              <br />
+              <del>This line of text is meant to be treated as deleted text.</del>
+              <br />
+              <ins>This line of text is meant to be treated as an addition to the document.</ins>
+              <br />
+              <strong>rendered as bold text</strong>
+              <br />
+              <em>rendered as italicized text</em>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 md:col-span-6">
+          <div class="card">
+            <div class="card-header">
+              <h5>Contextual Text Colors</h5>
+            </div>
+            <div class="card-body pc-component">
+              <p class="text-muted mb-1">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>
+              <p class="text-primary-500 mb-1">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p class="text-success-500 mb-1">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+              <p class="text-info-500 mb-1">Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+              <p class="text-warning-500 mb-1">Etiam porta sem malesuada magna mollis euismod.</p>
+              <p class="text-danger-500 mb-1">Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p class="text-dark-500 dark:text-white mb-1">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="card">
+            <div class="card-header">
+              <h5>Unordered</h5>
+            </div>
+            <div class="card-body pc-component">
+              <ul class="list-disc ltr:pl-4 rtl:pr-4">
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Consectetur adipiscing elit</li>
+                <li>Integer molestie lorem at massa</li>
+                <li>Facilisis in pretium nisl aliquet</li>
+                <li>
+                  Nulla volutpat aliquam velit
+                  <ul class="list-[circle] ltr:pl-4 rtl:pr-4">
+                    <li>Phasellus iaculis neque</li>
+                    <li>Purus sodales ultricies</li>
+                    <li>Vestibulum laoreet porttitor sem</li>
+                    <li>Ac tristique libero volutpat at</li>
+                  </ul>
+                </li>
+                <li>Faucibus porta lacus fringilla vel</li>
+                <li>Aenean sit amet erat nunc</li>
+                <li>Eget porttitor lorem</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="card">
+            <div class="card-header">
+              <h5>Ordered</h5>
+            </div>
+            <div class="card-body pc-component">
+              <ol class="list-decimal ltr:pl-4 rtl:pr-4">
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Consectetur adipiscing elit</li>
+                <li>Integer molestie lorem at massa</li>
+                <li>Facilisis in pretium nisl aliquet</li>
+                <li>
+                  Nulla volutpat aliquam velit
+                  <ul class="list-[circle] ltr:pl-4 rtl:pr-4">
+                    <li>Phasellus iaculis neque</li>
+                    <li>Purus sodales ultricies</li>
+                    <li>Vestibulum laoreet porttitor sem</li>
+                    <li>Ac tristique libero volutpat at</li>
+                  </ul>
+                </li>
+                <li>Faucibus porta lacus fringilla vel</li>
+                <li>Aenean sit amet erat nunc</li>
+                <li>Eget porttitor lorem</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+          <div class="card">
+            <div class="card-header">
+              <h5>Unstyled</h5>
+            </div>
+            <div class="card-body pc-component">
+              <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>
+                  Integer molestie lorem at massa
+                  <ul class="list-[circle] pl-4">
+                    <li>Phasellus iaculis neque</li>
+                  </ul>
+                </li>
+                <li>Faucibus porta lacus fringilla vel</li>
+                <li>Eget porttitor lorem</li>
+              </ul>
+              <h5 class="mt-3">Inline</h5>
+              <hr class="my-4 border-0 border-t border-theme-border dark:border-themedark-border" />
+              <ul>
+                <li class="inline-block mr-2">Lorem ipsum</li>
+                <li class="inline-block mr-2">Phasellus iaculis</li>
+                <li class="inline-block mr-2">Nulla volutpat</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 md:col-span-6">
+          <div class="card">
+            <div class="card-header">
+              <h5>Blockquotes</h5>
+            </div>
+            <div class="card-body pc-component">
+              <p class="text-muted mb-1">Your awesome text goes here.</p>
+              <blockquote class="py-2 px-4 text-[1rem]">
+                <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
                 </p>
-              </div>
-              <div class="card-body text-center">
-                <div class="grid grid-cols-12 gap-6">
-                  <div class="col-span-12 sm:col-span-6 sm:col-start-4">
-                    <input type="text" id="icon-search" class="form-control mb-4" placeholder="search . . " />
-                  </div>
-                </div>
-                <div
-                  class="i-main text-center *:relative *:cursor-pointer *:inline-flex *:items-center *:justify-center *:w-[70px] *:h-[70px] *:m-[5px] *:rounded-lg *:border *:border-theme-border dark:*:border-themedark-border"
-                  id="icon-wrapper"
-                ></div>
-              </div>
+                <footer
+                  class="text-[80%] before:content-['—'] text-theme-bodycolor/70 dark:text-themedark-bodycolor/70">
+                  Someone famous in
+                  <cite title="Source Title">Source Title</cite>
+                </footer>
+              </blockquote>
+              <p class="text-muted m-b-15 m-t-20">
+                Add
+                <code class="text-danger-400 text-sm">.text-right</code>
+                for a blockquote with right-aligned content.
+              </p>
+              <blockquote class="py-2 px-4 text-[1rem] text-right">
+                <p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+                </p>
+                <footer
+                  class="text-[80%] before:content-['—'] text-theme-bodycolor/70 dark:text-themedark-bodycolor/70">
+                  Someone famous in
+                  <cite title="Source Title">Source Title</cite>
+                </footer>
+              </blockquote>
             </div>
           </div>
-          <!-- [ sample-page ] end -->
         </div>
-        <!-- [ Main Content ] end -->
+        <div class="col-span-12 md:col-span-6">
+          <div class="card">
+            <div class="card-header">
+              <h5>Horizontal Description</h5>
+            </div>
+            <div class="card-body pc-component">
+              <dl class="grid grid-cols-12 gap-6">
+                <dt class="col-span-12 sm:col-span-3 font-semibold">Description lists</dt>
+                <dd class="col-span-12 sm:col-span-9">A description list is perfect for defining terms.</dd>
+                <dt class="col-span-12 sm:col-span-3 font-semibold">Euismod</dt>
+                <dd class="col-span-12 sm:col-span-9">
+                  Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+                </dd>
+                <dd class="col-span-12 sm:col-span-9">Donec id elit non mi porta gravida at eget metus.</dd>
+                <dt class="col-span-12 sm:col-span-3 font-semibold">Malesuada porta</dt>
+                <dd class="col-span-12 sm:col-span-9">Etiam porta sem malesuada magna mollis euismod.</dd>
+                <dt class="col-span-12 sm:col-span-3 font-semibold">Truncated term is truncated</dt>
+                <dd class="col-span-12 sm:col-span-9">
+                  Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit
+                  amet risus.
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <!-- [ Typography ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+  <footer class="pc-footer">
+    <div class="footer-wrapper container-fluid mx-10">
+      <div class="grid grid-cols-12 gap-1.5">
+        <div class="col-span-12 sm:col-span-6 my-1">
+          <p class="m-0"></p>
+            <a href="https://codedthemes.com/" class="text-theme-bodycolor dark:text-themedark-bodycolor hover:text-primary-500 dark:hover:text-primary-500" target="_blank">CodedThemes</a>
+            , Built with ♥ for a smoother web presence.
+          </p>
+        </div>
+        <div class="col-span-12 sm:col-span-6 my-1 justify-self-end">
+                 <p class="inline-block max-sm:mr-3 sm:ml-2">Distributed by <a href="https://themewagon.com" target="_blank">Themewagon</a></p>
+        </div>
       </div>
     </div>
-    <!-- [ Main Content ] end -->
-    <footer class="pc-footer">
-      <div class="footer-wrapper container-fluid mx-10">
-        <div class="grid grid-cols-12 gap-1.5">
-          <div class="col-span-12 sm:col-span-6 my-1">
-            <p class="m-0"></p>
-              <a href="https://codedthemes.com/" class="text-theme-bodycolor dark:text-themedark-bodycolor hover:text-primary-500 dark:hover:text-primary-500" target="_blank">CodedThemes</a>
-              , Built with ♥ for a smoother web presence.
-            </p>
-          </div>
-          <div class="col-span-12 sm:col-span-6 my-1 justify-self-end">
-                   <p class="inline-block max-sm:mr-3 sm:ml-2">Distributed by <a href="https://themewagon.com" target="_blank">Themewagon</a></p>
-          </div>
-        </div>
-      </div>
-    </footer>
+  </footer>
  <!-- Required Js -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/icon/custom-icon.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
+<script src="/js/plugins/simplebar.min.js"></script>
+<script src="/js/plugins/popper.min.js"></script>
+<script src="/js/icon/custom-icon.js"></script>
+<script src="/js/plugins/feather.min.js"></script>
+<script src="/js/component.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/script.js"></script>
 
 <div class="floting-button fixed bottom-[50px] right-[30px] z-[1030]">
 </div>
@@ -524,309 +696,7 @@
 </script>
 
 
-    <!-- [Page Specific JS] start -->
-    <script src="../assets/js/plugins/clipboard.min.js"></script>
-    <script>
-      var icon_list = [
-        'alert-octagon',
-        'alert-circle',
-        'activity',
-        'alert-triangle',
-        'align-center',
-        'airplay',
-        'align-justify',
-        'align-left',
-        'align-right',
-        'arrow-down-left',
-        'arrow-down-right',
-        'anchor',
-        'aperture',
-        'arrow-left',
-        'arrow-right',
-        'arrow-down',
-        'arrow-up-left',
-        'arrow-up-right',
-        'arrow-up',
-        'award',
-        'bar-chart',
-        'at-sign',
-        'bar-chart-2',
-        'battery-charging',
-        'bell-off',
-        'battery',
-        'bluetooth',
-        'bell',
-        'book',
-        'briefcase',
-        'camera-off',
-        'calendar',
-        'bookmark',
-        'box',
-        'camera',
-        'check-circle',
-        'check',
-        'check-square',
-        'cast',
-        'chevron-down',
-        'chevron-left',
-        'chevron-right',
-        'chevron-up',
-        'chevrons-down',
-        'chevrons-right',
-        'chevrons-up',
-        'chevrons-left',
-        'circle',
-        'clipboard',
-        'chrome',
-        'clock',
-        'cloud-lightning',
-        'cloud-drizzle',
-        'cloud-rain',
-        'cloud-off',
-        'codepen',
-        'cloud-snow',
-        'compass',
-        'copy',
-        'corner-down-right',
-        'corner-down-left',
-        'corner-left-down',
-        'corner-left-up',
-        'corner-up-left',
-        'corner-up-right',
-        'corner-right-down',
-        'corner-right-up',
-        'cpu',
-        'credit-card',
-        'crosshair',
-        'disc',
-        'delete',
-        'download-cloud',
-        'download',
-        'droplet',
-        'edit-2',
-        'edit',
-        'external-link',
-        'eye',
-        'feather',
-        'facebook',
-        'file-minus',
-        'eye-off',
-        'fast-forward',
-        'file-text',
-        'film',
-        'file',
-        'file-plus',
-        'folder',
-        'filter',
-        'flag',
-        'globe',
-        'grid',
-        'heart',
-        'home',
-        'github',
-        'image',
-        'inbox',
-        'layers',
-        'info',
-        'instagram',
-        'layout',
-        'link-2',
-        'life-buoy',
-        'link',
-        'log-in',
-        'list',
-        'lock',
-        'log-out',
-        'loader',
-        'mail',
-        'maximize-2',
-        'map',
-        'map-pin',
-        'menu',
-        'message-circle',
-        'message-square',
-        'minimize-2',
-        'mic-off',
-        'minus-circle',
-        'mic',
-        'minus-square',
-        'minus',
-        'moon',
-        'monitor',
-        'more-vertical',
-        'more-horizontal',
-        'move',
-        'music',
-        'navigation-2',
-        'navigation',
-        'octagon',
-        'package',
-        'pause-circle',
-        'pause',
-        'percent',
-        'phone-call',
-        'phone-forwarded',
-        'phone-missed',
-        'phone-off',
-        'phone-incoming',
-        'phone',
-        'phone-outgoing',
-        'pie-chart',
-        'play-circle',
-        'play',
-        'plus-square',
-        'plus-circle',
-        'plus',
-        'pocket',
-        'printer',
-        'power',
-        'radio',
-        'repeat',
-        'refresh-ccw',
-        'rewind',
-        'rotate-ccw',
-        'refresh-cw',
-        'rotate-cw',
-        'save',
-        'search',
-        'server',
-        'scissors',
-        'share-2',
-        'share',
-        'shield',
-        'settings',
-        'skip-back',
-        'shuffle',
-        'sidebar',
-        'skip-forward',
-        'slack',
-        'slash',
-        'smartphone',
-        'square',
-        'speaker',
-        'star',
-        'stop-circle',
-        'sun',
-        'sunrise',
-        'tablet',
-        'tag',
-        'sunset',
-        'target',
-        'thermometer',
-        'thumbs-up',
-        'thumbs-down',
-        'toggle-left',
-        'toggle-right',
-        'trash-2',
-        'trash',
-        'trending-up',
-        'trending-down',
-        'triangle',
-        'type',
-        'twitter',
-        'upload',
-        'umbrella',
-        'upload-cloud',
-        'unlock',
-        'user-check',
-        'user-minus',
-        'user-plus',
-        'user-x',
-        'user',
-        'users',
-        'video-off',
-        'video',
-        'voicemail',
-        'volume-x',
-        'volume-2',
-        'volume-1',
-        'volume',
-        'watch',
-        'wifi',
-        'x-square',
-        'wind',
-        'x',
-        'x-circle',
-        'zap',
-        'zoom-in',
-        'zoom-out',
-        'command',
-        'cloud',
-        'hash',
-        'headphones',
-        'underline',
-        'italic',
-        'bold',
-        'crop',
-        'help-circle',
-        'paperclip',
-        'shopping-cart',
-        'tv',
-        'wifi-off',
-        'minimize',
-        'maximize',
-        'gitlab',
-        'sliders'
-      ];
-      for (var i = 0, l = icon_list.length; i < l; i++) {
-        let icon_block = document.createElement('div');
-        icon_block.setAttribute('class', 'i-block');
-        icon_block.setAttribute('data-clipboard-text', icon_list[i]);
-        icon_block.setAttribute('data-filter', icon_list[i]);
+  
+</body>
 
-        let icon_main = document.createElement('i');
-        icon_main.setAttribute('data-feather', icon_list[i]);
-        icon_main.setAttribute('class', 'w-5 h-5');
-        icon_block.appendChild(icon_main);
-        document.querySelector('#icon-wrapper').append(icon_block);
-      }
-      feather.replace();
-      window.addEventListener('load', (event) => {
-        var i_copy = new ClipboardJS('.i-block');
-        i_copy.on('success', function (e) {
-          var targetElement = e.trigger;
-          let icon_badge = document.createElement('span');
-          icon_badge.setAttribute('class', 'ic-badge badge bg-success-500 text-white text-sm absolute bottom-1 left-2/4 -translate-x-2/4');
-          icon_badge.innerHTML = 'copied';
-          targetElement.append(icon_badge);
-          setTimeout(function () {
-            targetElement.children[1].remove();
-          }, 3000);
-        });
-
-        i_copy.on('error', function (e) {
-          var targetElement = e.trigger;
-          let icon_badge = document.createElement('span');
-          icon_badge.setAttribute('class', 'ic-badge badge bg-danger-500 text-white text-sm absolute bottom-1 left-2/4 -translate-x-2/4');
-          icon_badge.innerHTML = 'Error';
-          targetElement.append(icon_badge);
-          setTimeout(function () {
-            targetElement.children[1].remove();
-          }, 3000);
-        });
-        document.querySelector('#icon-search').addEventListener('keyup', function () {
-          var g = document.querySelector('#icon-search').value.toLowerCase();
-          var tc = document.querySelectorAll('.i-main .i-block');
-          for (var i = 0; i < tc.length; i++) {
-            var c = tc[i];
-            var t = c.getAttribute('data-filter');
-            if (t) {
-              var s = t.toLowerCase();
-            }
-            if (s) {
-              var n = s.indexOf(g);
-              if (n !== -1) {
-                c.style.display = 'inline-flex';
-              } else {
-                c.style.display = 'none';
-              }
-            }
-          }
-        });
-      });
-    </script>
-    <!-- [Page Specific JS] end -->
-    
-  </body>
-  <!-- [Body] end -->
 </html>
