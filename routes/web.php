@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -7,6 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/suppliers', function () {
-    return view('elements.supplier');
+    return view('suppliers.index');
 })->name('supplier');
 
+Route::resource('suppliers', SupplierController::class);

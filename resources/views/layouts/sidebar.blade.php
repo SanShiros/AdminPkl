@@ -79,7 +79,7 @@
           </a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="{{ route('supplier') }}" class="pc-link">
+          <a href="{{ route('suppliers.index') }}" class="pc-link">
             <span class="pc-micon"> <i data-feather="feather"></i></span>
             <span class="pc-mtext">Suppliers</span>
           </a>
