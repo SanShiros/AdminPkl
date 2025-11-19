@@ -101,13 +101,14 @@
                             {{-- rows per page --}}
                             <div class="d-flex align-items-center gap-2">
                                 <span>Rows per page:</span>
-                                <select id="per-page-select" class="rowsSelect">
-                                    @foreach([3,6,9] as $size) {{-- sementara 3 / 6 / 9 buat test --}}
+                              <select id="per-page-select" class="rowsSelect">
+                                    @foreach([3,6,9] as $size)
                                         <option value="{{ $size }}" {{ request('per_page', 3) == $size ? 'selected' : '' }}>
                                             {{ $size }}
                                         </option>
                                     @endforeach
                                 </select>
+
                             </div>
                     
                             {{-- nomor halaman --}}
@@ -116,27 +117,45 @@
                             </span>
                     
                             {{-- tombol prev + next --}}
-                            <div class="pageArrows">
-                                @if ($suppliers->onFirstPage())
-                                    <button class="pageBtn disabledBtn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                                    </button>
-                                @else
-                                    <a href="{{ $suppliers->previousPageUrl() }}" class="pageBtn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                                    </a>
-                                @endif
-                    
-                                @if ($suppliers->hasMorePages())
-                                    <a href="{{ $suppliers->nextPageUrl() }}" class="pageBtn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </a>
-                                @else
-                                    <button class="pageBtn disabledBtn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </button>
-                                @endif
-                            </div>
+     
+<div class="pageArrows">
+
+    {{-- PREV --}}
+    @if ($suppliers->onFirstPage())
+        <button class="pageBtn disabledBtn">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </button>
+    @else
+        <a href="{{ $suppliers->appends(['per_page' => $perPage])->previousPageUrl() }}" class="pageBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
+    @endif
+
+    {{-- NEXT --}}
+    @if ($suppliers->hasMorePages())
+        <a href="{{ $suppliers->appends(['per_page' => $perPage])->nextPageUrl() }}" class="pageBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    @else
+        <button class="pageBtn disabledBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </button>
+    @endif
+
+</div>
+
                         </div>
                     </div>
                     
@@ -423,19 +442,20 @@
             }
 
             // rows per page (butuh index controller pakai request('per_page'))
-            document.addEventListener('DOMContentLoaded', function () {
-    const perPageSelect = document.getElementById('per-page-select');
+            const perPageSelect = document.getElementById('per-page-select');
 
-    if (perPageSelect) {
-        perPageSelect.addEventListener('change', function () {
-            const url = new URL(window.location.href);
-            url.searchParams.set('per_page', this.value);
-            url.searchParams.set('page', 1);  
-            window.location.href = url.toString();
-        });
-    }
+    perPageSelect.addEventListener('change', function () {
+        const perPage = this.value;
+        const url = new URL(window.location.href);
+
+        // set jumlah row per page
+        url.searchParams.set('per_page', perPage);
+
+        // tiap ganti jumlah row, balik ke halaman 1 biar aman
+        url.searchParams.set('page', 1);
+
+        window.location.href = url.toString();
 });
-
-        });
+});
     </script>
 @endsection

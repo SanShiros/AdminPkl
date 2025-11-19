@@ -7,14 +7,18 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    public function index()
-    {
-        $perPage = request('per_page', 3);
+ public function index(Request $request)
+{
+    $perPage = $request->get('per_page', 3);
 
-        $suppliers = Supplier::orderBy('id', 'desc')->paginate($perPage);
-    
-        return view('suppliers.index', compact('suppliers'));
-    }
+    $suppliers = Supplier::orderBy('id', 'desc')
+        ->paginate($perPage)
+        ->withQueryString();
+
+    return view('suppliers.index', compact('suppliers', 'perPage'));
+}
+
+
 
     public function create()
     {
