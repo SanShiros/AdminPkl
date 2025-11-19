@@ -210,23 +210,13 @@
         <i data-feather="settings"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
-        <a href="#!" class="dropdown-item">
-          <i class="ti ti-user"></i>
-          <span>My Account</span>
-        </a>
-        <a href="#!" class="dropdown-item">
-          <i class="ti ti-settings"></i>
-          <span>Settings</span>
-        </a>
-        <a href="#!" class="dropdown-item">
-          <i class="ti ti-headset"></i>
-          <span>Support</span>
-        </a>
-        <a href="#!" class="dropdown-item">
-          <i class="ti ti-lock"></i>
-          <span>Lock Screen</span>
-        </a>
-        <a href="#!" class="dropdown-item">
+        <a href="https://chat.whatsapp.com/BYiNrHnIg7K7elVHvwhrUd?mode=hqrt2" 
+        class="dropdown-item" 
+        target="_blank">
+         <i class="ti ti-headset"></i>
+         <span>Support</span>
+     </a>     
+        <a href="{{ route('logout') }}" class="dropdown-item">
           <i class="ti ti-power"></i>
           <span>Logout</span>
         </a>
@@ -354,51 +344,22 @@
               <img src="/images/user/avatar-2.jpg" alt="user-image" class="w-10 rounded-full" />
             </div>
             <div class="grow ms-3">
-              <h6 class="mb-1 text-white">Carson Darrin 🖖</h6>
-              <span class="text-white">carson.darrin@company.io</span>
+              <h6 class="mb-1 text-white">
+                {{ session('user.nama') }}
+            </h6>
+            <span class="text-white">
+                {{ session('user.username') }}
+            </span>
             </div>
           </div>
         </div>
         <div class="dropdown-body py-4 px-5">
-          <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 225px)">
-            <a href="#" class="dropdown-item">
-              <span>
-                <svg class="pc-icon text-muted me-2 inline-block">
-                  <use xlink:href="#custom-setting-outline"></use>
-                </svg>
-                <span>Settings</span>
-              </span>
-            </a>
-            <a href="#" class="dropdown-item">
-              <span>
-                <svg class="pc-icon text-muted me-2 inline-block">
-                  <use xlink:href="#custom-share-bold"></use>
-                </svg>
-                <span>Share</span>
-              </span>
-            </a>
-            <a href="#" class="dropdown-item">
-              <span>
-                <svg class="pc-icon text-muted me-2 inline-block">
-                  <use xlink:href="#custom-lock-outline"></use>
-                </svg>
-                <span>Change Password</span>
-              </span>
-            </a>
-            <div class="grid my-3">
-              <button class="btn btn-primary flex items-center justify-center">
-                <svg class="pc-icon me-2 w-[22px] h-[22px]">
-                  <use xlink:href="#custom-logout-1-outline"></use>
-                </svg>
-                Logout
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </li>
   </ul>
-</div></div>
+</div>
+</div>
 </header>
 
     @yield('content')
