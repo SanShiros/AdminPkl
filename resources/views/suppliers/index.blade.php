@@ -1,6 +1,7 @@
 @extends('layouts.sidebar')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <div class="pc-container">
         <div class="pc-content">
 

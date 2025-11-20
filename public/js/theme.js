@@ -15,9 +15,30 @@ var rtl_flag = false;
 var dark_flag = false;
 
 document.addEventListener('DOMContentLoaded', function () {
+  let savedTheme = null;
+
   if (typeof Storage !== 'undefined') {
-    layout_change(localStorage.getItem('theme'));
+    savedTheme = localStorage.getItem('theme');
   }
+
+  // kalau belum pernah diset, ikut sistem
+  if (!savedTheme) {
+    savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+
+  layout_change(savedTheme);
+
+  // listen kalau user ganti theme OS (optional, boleh di-skip kalau nggak mau)
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    const newTheme = event.matches ? 'dark' : 'light';
+
+    // cuma ganti kalau user belum pernah pilih manual
+    if (!localStorage.getItem('theme')) {
+      layout_change(newTheme);
+    }
+  });
 });
 // Function to change layout dark/light settings
 function layout_change_default() {
@@ -61,25 +82,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     var layout_btn = document.querySelectorAll('.theme-layout .btn');
-    for (var t = 0; t < layout_btn.length; t++) {
-      if (layout_btn[t]) {
-        layout_btn[t].addEventListener('click', function (event) {
-          event.stopPropagation();
-          var targetElement = event.target;
+for (var t = 0; t < layout_btn.length; t++) {
+  if (layout_btn[t]) {
+    layout_btn[t].addEventListener('click', function (event) {
+      event.stopPropagation();
+      var targetElement = event.target;
 
-          if (targetElement.tagName == 'SPAN') {
-            targetElement = targetElement.parentNode;
-          }
-          if (targetElement.getAttribute('data-value') == 'true') {
-            localStorage.setItem('theme', 'light');
-            document.documentElement.setAttribute('data-theme', 'light'); // Update theme immediately
-          } else {
-            localStorage.setItem('theme', 'dark');
-            document.documentElement.setAttribute('data-theme', 'dark'); // Update theme immediately
-          }
-        });
+      if (targetElement.tagName === 'SPAN') {
+        targetElement = targetElement.parentNode;
       }
-    }
+
+      let layout; // 'light' atau 'dark'
+
+      if (targetElement.getAttribute('data-value') === 'true') {
+        // button "Light"
+        layout = 'light';
+      } else {
+        // button "Dark"
+        layout = 'dark';
+      }
+
+      // simpan ke localStorage
+      localStorage.setItem('theme', layout);
+
+      // terapkan ke HTML + update logo + tombol aktif
+      layout_change(layout);
+    });
+  }
+}
 
   }
 
