@@ -3,7 +3,7 @@
 @section('content')
     <!-- Panggil CSS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/suppliers.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/categories.css') }}"><!-- bisa copy dari suppliers.css dulu -->
 
     <div class="pc-container">
         <div class="pc-content">
@@ -12,11 +12,11 @@
             <div class="page-header">
                 <div class="page-block">
                     <div class="page-header-title">
-                        <h5 class="mb-0 font-medium">Daftar Supplier</h5>
+                        <h5 class="mb-0 font-medium">Daftar Kategori</h5>
                     </div>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/dashboard/index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Suppliers</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Categories</a></li>
                         <li class="breadcrumb-item" aria-current="page">List</li>
                     </ul>
                 </div>
@@ -44,14 +44,14 @@
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </span>
-                        <input type="text" id="supplier-search" class="searchInput" placeholder="Search...">
+                        <input type="text" id="category-search" class="searchInput" placeholder="Search...">
                     </div>
                 </div>
 
-                {{-- KANAN: ADD SUPPLIER (BUKA MODAL) --}}
-                <button type="button" id="btnOpenCreateSupplier" class="btnAddCustomer">
+                {{-- KANAN: ADD CATEGORY (BUKA MODAL) --}}
+                <button type="button" id="btnOpenCreateCategory" class="btnAddCustomer">
                     <i class="bi bi-plus-lg me-1"></i>
-                    Add supplier
+                    Add category
                 </button>
             </div>
 
@@ -63,57 +63,48 @@
                     </div>
                 @endif
 
-                {{-- TABEL SUPPLIER --}}
+                {{-- TABEL CATEGORY --}}
                 <div class="card border-0 shadow-sm">
                     <div class="card-body table-responsive p-0">
-                        <table class="table mb-0 align-middle table-modern" id="supplier-table">
+                        <table class="table mb-0 align-middle table-modern" id="category-table">
                             <thead>
                                 <tr>
                                     <th style="width: 50px">#</th>
-                                    <th>Nama Supplier</th>
-                                    <th>Alamat</th>
-                                    <th>Telepon</th>
-                                    <th>Email</th>
+                                    <th>Nama Kategori</th>
+                                    <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($suppliers as $index => $supplier)
-                                    <tr class="supplier-row" data-id="{{ $supplier->id }}"
-                                        data-nama="{{ $supplier->nama_supplier }}" data-alamat="{{ $supplier->alamat }}"
-                                        data-telepon="{{ $supplier->telepon }}" data-email="{{ $supplier->email }}"
-                                        data-delete-url="{{ route('suppliers.destroy', $supplier->id) }}"
-                                        oncontextmenu="openSupplierContext(event, this)"
-                                        onclick="openSupplierContext(event, this)">
-                                        <td>{{ $suppliers->firstItem() + $index }}</td>
-                                        <td>{{ $supplier->nama_supplier }}</td>
-                                        <td>{{ $supplier->alamat ?? '-' }}</td>
-                                        <td>{{ $supplier->telepon ?? '-' }}</td>
-                                        <td>{{ $supplier->email ?? '-' }}</td>
+                                @foreach ($categories as $k)
+                                    <tr class="category-row" data-id="{{ $k->id }}" data-nama="{{ $k->nama }}"
+                                        data-keterangan="{{ $k->keterangan }}"
+                                        data-delete-url="{{ route('categories.destroy', $k->id) }}"
+                                        oncontextmenu="openCategoryContext(event, this)"
+                                        onclick="openCategoryContext(event, this)">
+                                        <td>{{ $categories->firstItem() + $loop->index }}</td>
+                                        <td>{{ $k->nama }}</td>
+                                        <td>{{ $k->keterangan }}</td>
                                     </tr>
-                                @empty
-
-                                    <tr>
-                                        <td colspan="5" class="text-center py-4">Belum ada data supplier.</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
+
                         </table>
                     </div>
 
                     <div class="paginationBar">
                         {{-- KIRI: INFO JUMLAH DATA --}}
                         <div class="leftInfo">
-                            {{ $suppliers->firstItem() }}–{{ $suppliers->lastItem() }} of {{ $suppliers->total() }}
+                            {{ $categories->firstItem() }}–{{ $categories->lastItem() }} of {{ $categories->total() }}
                         </div>
 
                         {{-- KANAN: ROWS PER PAGE + PAGE + ARROW --}}
                         <div class="rightInfo">
                             <div class="d-flex align-items-center gap-2">
                                 <span>Rows per page:</span>
-                                <select id="per-page-select" class="rowsSelect">
+                                <select id="category-per-page-select" class="rowsSelect">
                                     @foreach ([3, 6, 9] as $size)
                                         <option value="{{ $size }}"
-                                            {{ request('per_page', 3) == $size ? 'selected' : '' }}>
+                                            {{ request('per_page', $perPage) == $size ? 'selected' : '' }}>
                                             {{ $size }}
                                         </option>
                                     @endforeach
@@ -121,12 +112,12 @@
                             </div>
 
                             <span class="pageInfo">
-                                {{ $suppliers->currentPage() }}/{{ $suppliers->lastPage() }}
+                                {{ $categories->currentPage() }}/{{ $categories->lastPage() }}
                             </span>
 
                             <div class="pageArrows">
                                 {{-- PREV --}}
-                                @if ($suppliers->onFirstPage())
+                                @if ($categories->onFirstPage())
                                     <button class="pageBtn disabledBtn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -137,7 +128,7 @@
                                         </svg>
                                     </button>
                                 @else
-                                    <a href="{{ $suppliers->appends(['per_page' => $perPage])->previousPageUrl() }}"
+                                    <a href="{{ $categories->appends(['per_page' => $perPage])->previousPageUrl() }}"
                                         class="pageBtn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -150,8 +141,8 @@
                                 @endif
 
                                 {{-- NEXT --}}
-                                @if ($suppliers->hasMorePages())
-                                    <a href="{{ $suppliers->appends(['per_page' => $perPage])->nextPageUrl() }}"
+                                @if ($categories->hasMorePages())
+                                    <a href="{{ $categories->appends(['per_page' => $perPage])->nextPageUrl() }}"
                                         class="pageBtn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -180,37 +171,29 @@
         </div> {{-- pc-content --}}
     </div> {{-- pc-container --}}
 
-    {{-- CONTEXT MENU KLIK KANAN --}}
-    <div id="supplierContextMenu" class="context-menu">
-        <button type="button" class="context-item" id="supplier-context-edit">
-            <i class="bi bi-pencil-square me-2"></i> Edit
-        </button>
-
-        <button type="button" class="context-item text-danger" id="supplier-context-delete">
-            <i class="bi bi-trash3 me-2"></i> Delete
-        </button>
-    </div>
+  <div id="categoryContextMenu" class="context-menu">
+    <button type="button" class="context-item" id="category-context-edit">
+        <i class="bi bi-pencil-square me-2"></i> Edit
+    </button>
+    <button type="button" class="context-item text-danger" id="category-context-delete">
+        <i class="bi bi-trash3 me-2"></i> Delete
+    </button>
+</div>
 
 
-    {{-- FORM DELETE GLOBAL UNTUK CONTEXT MENU --}}
-    <form id="context-delete-form" method="POST" style="display: none;">
-        @csrf
-        @method('DELETE')
-    </form>
-
-    {{-- MODAL CREATE SUPPLIER --}}
-    <div id="modalCreateSupplier" class="custom-modal-backdrop d-none">
+    {{-- MODAL CREATE CATEGORY --}}
+    <div id="modalCreateCategory" class="custom-modal-backdrop d-none">
         <div class="custom-modal-dialog">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Tambah Supplier</h5>
+                    <h5 class="mb-0">Tambah Kategori</h5>
                     <button type="button" class="btn-close" data-close-modal>&times;</button>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('suppliers.store') }}" method="POST" class="prevent-multi-submit">
+                    <form action="{{ route('categories.store') }}" method="POST" class="prevent-multi-submit">
                         @csrf
-                        @php($supplier = null)
-                        @include('suppliers._form')
+                        @php($category = null)
+                        @include('categories._form')
                         <div class="mt-3 d-flex justify-content-end gap-2">
                             <button type="button" class="btn btn-secondary" data-close-modal>Batal</button>
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -221,20 +204,20 @@
         </div>
     </div>
 
-    {{-- MODAL EDIT SUPPLIER --}}
-    <div id="modalEditSupplier" class="custom-modal-backdrop d-none">
+    {{-- MODAL EDIT CATEGORY --}}
+    <div id="modalEditCategory" class="custom-modal-backdrop d-none">
         <div class="custom-modal-dialog">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Edit Supplier</h5>
+                    <h5 class="mb-0">Edit Kategori</h5>
                     <button type="button" class="btn-close" data-close-modal>&times;</button>
                 </div>
                 <div class="card-body">
-                    <form id="formEditSupplier" method="POST" class="prevent-multi-submit">
+                    <form id="formEditCategory" method="POST" class="prevent-multi-submit">
                         @csrf
                         @method('PUT')
-                        @php($supplier = null)
-                        @include('suppliers._form')
+                        @php($category = null)
+                        @include('categories._form')
                         <div class="mt-3 d-flex justify-content-end gap-2">
                             <button type="button" class="btn btn-secondary" data-close-modal>Batal</button>
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -247,5 +230,5 @@
     </div>
 
     <!-- Panggil JS eksternal -->
-    <script src="{{ asset('js/suppliers.js') }}"></script>
+    <script src="{{ asset('js/categories.js') }}"></script>
 @endsection

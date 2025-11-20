@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
+<html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr">
   <head>
     <title>Home | Datta Able Dashboard Template</title>
     <!-- [Meta] -->
@@ -20,11 +20,28 @@
      <!-- [Font] Family -->
      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <!-- [phosphor Icons] https://phosphoricons.com/  -->
+
+      <script>
+        (function () {
+            try {
+                var layout = localStorage.getItem('theme') || 'light';
+                if (layout !== 'dark' && layout !== 'light') {
+                    layout = 'light';
+                }
+                // langsung set ke <html> sebelum CSS jalan
+                document.documentElement.setAttribute('data-pc-theme', layout);
+            } catch (e) {
+                document.documentElement.setAttribute('data-pc-theme', 'light');
+            }
+        })();
+    </script>
+
     <link rel="stylesheet" href="{{ asset('/fonts/phosphor/duotone/style.css')}}" />
     <link rel="stylesheet" href="{{ asset('/fonts/tabler-icons.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('/fonts/feather.css')}}" />
     <link rel="stylesheet" href="{{ asset('/fonts/fontawesome.css')}}" />
     <link rel="stylesheet" href="{{ asset('/fonts/material.css')}}" />
+    <link rel="stylesheet" href="{{ asset('/css/custom.css')}}" />
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('/css/style.css')}}" id="main-style-link" />
   </head>
@@ -55,7 +72,7 @@
         </li>
         <li class="pc-item">
         <li class="pc-item">
-          <a href="{{ url('/') }}" class="pc-link">
+          <a href="{{ route('index') }}" class="pc-link">
             <span class="pc-micon">
               <i data-feather="home"></i>
             </span>
@@ -73,7 +90,7 @@
           </a>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="" class="pc-link">
+          <a href="{{ route('categories.index') }}" class="pc-link">
             <span class="pc-micon"> <i data-feather="type"></i></span>
             <span class="pc-mtext">Categori</span>
           </a>
@@ -363,18 +380,58 @@
 </header>
 
     @yield('content')
+{{-- GLOBAL DELETE MODAL --}}
+<div id="deleteConfirmModal" class="delete-backdrop hidden">
+    <div class="delete-dialog">
+        {{-- Tombol X --}}
+        <button type="button" id="deleteConfirmClose" class="delete-close">&times;</button>
+
+        {{-- Icon merah --}}
+        <div class="delete-icon-wrap">
+            <div class="delete-icon-circle">
+                <span>!</span>
+            </div>
+        </div>
+
+        {{-- Judul & teks --}}
+        <h3 class="delete-title">You are about to delete task</h3>
+        <p class="delete-text">
+            Are you sure you want to delete this post? This action cannot be undone.
+        </p>
+
+        {{-- Form delete --}}
+        <form id="deleteConfirmForm" method="POST">
+            @csrf
+            @method('DELETE')
+
+            <div class="delete-btn-row">
+                <button type="button" id="deleteConfirmCancel" class="btn-delete-cancel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Cancel
+                </button>
+                <button type="submit" class="btn-delete-danger">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <i class="bi bi-trash3 me-1"></i>
+                    Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
 
 <footer class="pc-footer">
       <div class="footer-wrapper container-fluid mx-10">
         <div class="grid grid-cols-12 gap-1.5">
           <div class="col-span-12 sm:col-span-6 my-1">
             <p class="m-0"></p>
-              <a href="https://codedthemes.com/" class="text-theme-bodycolor dark:text-themedark-bodycolor hover:text-primary-500 dark:hover:text-primary-500" target="_blank">CodedThemes</a>
-              , Built with ♥ for a smoother web presence.
+              <a href="https://codedthemes.com/" class="text-theme-bodycolor dark:text-themedark-bodycolor hover:text-primary-500 dark:hover:text-primary-500" target="_blank">Dibuat oleh SMKN 2 Kraksaan</a>
+             Tidak untuk komersial — karya siswa untuk belajar.
             </p>
           </div>
           <div class="col-span-12 sm:col-span-6 my-1 justify-self-end">
-                   <p class="inline-block max-sm:mr-3 sm:ml-2">Distributed by <a href="https://themewagon.com" target="_blank">Themewagon</a></p>
+                   <p class="inline-block max-sm:mr-3 sm:ml-2">Dibuat pada<a href="https://themewagon.com" target="_blank"> @2025</a></p>
           </div>
         </div>
       </div>
@@ -387,29 +444,9 @@
     <script src="/js/component.js"></script>
     <script src="/js/theme.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/alert.js"></script>
     <div class="floting-button fixed bottom-[50px] right-[30px] z-[1030]">
     </div>
-    <script>
-      layout_change('false');
-    </script>
-    <script>
-      layout_theme_sidebar_change('dark');
-    </script>
-    <script>
-      change_box_container('false');
-    </script>
-    <script>
-      layout_caption_change('true');
-    </script>
-    <script>
-      layout_rtl_change('false');
-    </script>
-    <script>
-      preset_change('preset-1');
-    </script>
-    <script>
-      main_layout_change('vertical');
-    </script>
   </body>
   <!-- [Body] end -->
 </html>

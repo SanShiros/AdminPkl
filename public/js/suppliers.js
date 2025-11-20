@@ -168,3 +168,37 @@ guardedForms.forEach((form) => {
         submitBtn.innerText = 'Memproses...';
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const menu   = document.getElementById('supplierContextMenu');
+    const deleteBtn = document.getElementById('supplier-context-delete');
+
+    let selectedRow = null;
+
+    function openSupplierContext(event, row) {
+        event.preventDefault();
+
+        selectedRow = row;
+        menu.style.left = event.pageX + 'px';
+        menu.style.top  = event.pageY + 'px';
+        menu.style.display = 'block';
+    }
+
+    window.openSupplierContext = openSupplierContext;
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('#supplierContextMenu')) {
+            menu.style.display = 'none';
+        }
+    });
+
+    deleteBtn.addEventListener('click', function () {
+        if (!selectedRow) return;
+
+        const url = selectedRow.dataset.deleteUrl;
+
+        menu.style.display = 'none';
+        openDeleteModal(url);  // 🔥 PAKAI GLOBAL DELETE MODAL
+    });
+
+});

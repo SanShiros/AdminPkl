@@ -99,7 +99,7 @@
         }
 
         .btn {
-            width: 100%;
+            width: 106%;
             padding: 10px;
             background: #1e66f2;
             color: white;

@@ -1,11 +1,7 @@
 /**
 =========================================================================
-=========================================================================
 Template Name: Datta Able - Tailwind Admin Template
-Author: CodedThemes
-Support: https://codedthemes.support-hub.io/
-File: themes.js
-=========================================================================
+File: themes.js (DISIMPLIFY BIAR THEME STABIL)
 =========================================================================
 */
 
@@ -14,111 +10,73 @@ File: themes.js
 var rtl_flag = false;
 var dark_flag = false;
 
+// ======================= INIT =======================
 document.addEventListener('DOMContentLoaded', function () {
-  let savedTheme = null;
-
+  // 1) BACA THEME DARI localStorage
+  let layout = 'light';
   if (typeof Storage !== 'undefined') {
-    savedTheme = localStorage.getItem('theme');
-  }
-
-  // kalau belum pernah diset, ikut sistem
-  if (!savedTheme) {
-    savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-  }
-
-  layout_change(savedTheme);
-
-  // listen kalau user ganti theme OS (optional, boleh di-skip kalau nggak mau)
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-    const newTheme = event.matches ? 'dark' : 'light';
-
-    // cuma ganti kalau user belum pernah pilih manual
-    if (!localStorage.getItem('theme')) {
-      layout_change(newTheme);
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') {
+      layout = saved;
     }
-  });
-});
-// Function to change layout dark/light settings
-function layout_change_default() {
-  // Determine initial layout based on user's color scheme preference
-  let dark_layout = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
-  // Apply the determined layout
-  layout_change(dark_layout);
-
-  // Set the active state for the default layout button
-  const btn_control = document.querySelector('.theme-layout .btn[data-value="default"]');
-  if (btn_control) {
-    btn_control.classList.add('active');
   }
 
-  // Listen for changes in the user's color scheme preference and adjust layout accordingly
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-    dark_layout = event.matches ? 'dark' : 'light';
-    layout_change(dark_layout);
-  });
-}
+  // 2) TERAPKAN THEME KE <html>
+  layout_change(layout);
 
-// This event listener executes when the DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', function () {
-  // Check if elements with class 'preset-color' exist (switch preset-1 to preset-10 colors and change main colors according to preset-* value)
+  // 3) SETUP SEMUA LISTENER (BUTTON, PRESET, DLL)
+  init_theme_controls();
+});
+
+// ======================= SETUP CONTROL =======================
+function init_theme_controls() {
+  // ========== PRESET COLOR ==========
   var if_exist = document.querySelectorAll('.preset-color');
-  if (if_exist) {
-    // Iterate over preset color links and add click event listeners
+  if (if_exist.length) {
     var preset_color = document.querySelectorAll('.preset-color > a');
     for (var h = 0; h < preset_color.length; h++) {
       var c = preset_color[h];
       c.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
-        // Extract the preset value and call preset_change function
         var presetValue = targetElement.getAttribute('data-value');
         preset_change(presetValue);
       });
     }
 
+    // ========== TOMBOL THEME (LIGHT/DARK) ==========
     var layout_btn = document.querySelectorAll('.theme-layout .btn');
-for (var t = 0; t < layout_btn.length; t++) {
-  if (layout_btn[t]) {
-    layout_btn[t].addEventListener('click', function (event) {
-      event.stopPropagation();
-      var targetElement = event.target;
+    for (var t = 0; t < layout_btn.length; t++) {
+      var btn = layout_btn[t];
+      if (!btn) continue;
 
-      if (targetElement.tagName === 'SPAN') {
-        targetElement = targetElement.parentNode;
-      }
+      btn.addEventListener('click', function (event) {
+        event.stopPropagation();
+        var targetElement = event.target;
 
-      let layout; // 'light' atau 'dark'
+        if (targetElement.tagName === 'SPAN') {
+          targetElement = targetElement.parentNode;
+        }
 
-      if (targetElement.getAttribute('data-value') === 'true') {
-        // button "Light"
-        layout = 'light';
-      } else {
-        // button "Dark"
-        layout = 'dark';
-      }
+        // data-value="true" → light, selain itu → dark
+        var layout = targetElement.getAttribute('data-value') === 'true'
+          ? 'light'
+          : 'dark';
 
-      // simpan ke localStorage
-      localStorage.setItem('theme', layout);
-
-      // terapkan ke HTML + update logo + tombol aktif
-      layout_change(layout);
-    });
-  }
-}
-
+        // cukup panggil layout_change, DI SANA otomatis set localStorage
+        layout_change(layout);
+      });
+    }
   }
 
-  // Initialize SimpleBar on elements with class 'pct-body' for custom scrollbar
+  // ========== SIMPLEBAR ==========
   if (document.querySelector('.pct-body')) {
     new SimpleBar(document.querySelector('.pct-body'));
   }
 
-  // Reset layout on button click
+  // ========== RESET LAYOUT ==========
   var layout_reset = document.querySelector('#layoutreset');
   if (layout_reset) {
     layout_reset.addEventListener('click', function (e) {
@@ -129,15 +87,15 @@ for (var t = 0; t < layout_btn.length; t++) {
   }
 
   // ========================================
-  
-  var if_exist = document.querySelectorAll('.header-color');
-  if (if_exist) {
-    var preset_color = document.querySelectorAll('.header-color > a');
-    for (var h = 0; h < preset_color.length; h++) {
-      var c = preset_color[h];
-      c.addEventListener('click', function (event) {
+  // HEADER COLOR
+  var header_exist = document.querySelectorAll('.header-color');
+  if (header_exist.length) {
+    var header_color = document.querySelectorAll('.header-color > a');
+    for (var h2 = 0; h2 < header_color.length; h2++) {
+      var ch = header_color[h2];
+      ch.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'SPAN' || targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'SPAN' || targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
         var temp = targetElement.getAttribute('data-value');
@@ -146,14 +104,15 @@ for (var t = 0; t < layout_btn.length; t++) {
     }
   }
 
-  var if_exist = document.querySelectorAll('.navbar-color');
-  if (if_exist) {
-    var preset_color = document.querySelectorAll('.navbar-color > a');
-    for (var h = 0; h < preset_color.length; h++) {
-      var c = preset_color[h];
-      c.addEventListener('click', function (event) {
+  // NAVBAR COLOR
+  var navbar_exist = document.querySelectorAll('.navbar-color');
+  if (navbar_exist.length) {
+    var navbar_color = document.querySelectorAll('.navbar-color > a');
+    for (var h3 = 0; h3 < navbar_color.length; h3++) {
+      var cn = navbar_color[h3];
+      cn.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'SPAN' || targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'SPAN' || targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
         var temp = targetElement.getAttribute('data-value');
@@ -162,14 +121,15 @@ for (var t = 0; t < layout_btn.length; t++) {
     }
   }
 
-  var if_exist = document.querySelectorAll('.logo-color');
-  if (if_exist) {
-    var preset_color = document.querySelectorAll('.logo-color > a');
-    for (var h = 0; h < preset_color.length; h++) {
-      var c = preset_color[h];
-      c.addEventListener('click', function (event) {
+  // LOGO COLOR
+  var logo_exist = document.querySelectorAll('.logo-color');
+  if (logo_exist.length) {
+    var logo_color = document.querySelectorAll('.logo-color > a');
+    for (var h4 = 0; h4 < logo_color.length; h4++) {
+      var cl = logo_color[h4];
+      cl.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'SPAN' || targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'SPAN' || targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
         var temp = targetElement.getAttribute('data-value');
@@ -178,14 +138,15 @@ for (var t = 0; t < layout_btn.length; t++) {
     }
   }
 
-  var if_exist = document.querySelectorAll('.caption-color');
-  if (if_exist) {
-    var preset_color = document.querySelectorAll('.caption-color > a');
-    for (var h = 0; h < preset_color.length; h++) {
-      var c = preset_color[h];
-      c.addEventListener('click', function (event) {
+  // CAPTION COLOR
+  var caption_exist = document.querySelectorAll('.caption-color');
+  if (caption_exist.length) {
+    var caption_color = document.querySelectorAll('.caption-color > a');
+    for (var h5 = 0; h5 < caption_color.length; h5++) {
+      var cc = caption_color[h5];
+      cc.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'SPAN' || targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'SPAN' || targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
         var temp = targetElement.getAttribute('data-value');
@@ -194,14 +155,15 @@ for (var t = 0; t < layout_btn.length; t++) {
     }
   }
 
-  var if_exist = document.querySelectorAll('.navbar-img');
-  if (if_exist) {
-    var preset_color = document.querySelectorAll('.navbar-img > a');
-    for (var h = 0; h < preset_color.length; h++) {
-      var c = preset_color[h];
-      c.addEventListener('click', function (event) {
+  // NAVBAR IMAGE
+  var navimg_exist = document.querySelectorAll('.navbar-img');
+  if (navimg_exist.length) {
+    var navbar_img_color = document.querySelectorAll('.navbar-img > a');
+    for (var h6 = 0; h6 < navbar_img_color.length; h6++) {
+      var ci = navbar_img_color[h6];
+      ci.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'SPAN' || targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'SPAN' || targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
         var temp = targetElement.getAttribute('data-value');
@@ -210,14 +172,15 @@ for (var t = 0; t < layout_btn.length; t++) {
     }
   }
 
-  var if_exist = document.querySelectorAll('.drp-menu-icon');
-  if (if_exist) {
-    var preset_color = document.querySelectorAll('.drp-menu-icon > a');
-    for (var h = 0; h < preset_color.length; h++) {
-      var c = preset_color[h];
-      c.addEventListener('click', function (event) {
+  // DROPDOWN MENU ICON
+  var drp_menu_icon_exist = document.querySelectorAll('.drp-menu-icon');
+  if (drp_menu_icon_exist.length) {
+    var drp_menu_icon_color = document.querySelectorAll('.drp-menu-icon > a');
+    for (var h7 = 0; h7 < drp_menu_icon_color.length; h7++) {
+      var cmi = drp_menu_icon_color[h7];
+      cmi.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'SPAN' || targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'SPAN' || targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
         var temp = targetElement.getAttribute('data-value');
@@ -226,14 +189,15 @@ for (var t = 0; t < layout_btn.length; t++) {
     }
   }
 
-  var if_exist = document.querySelectorAll('.drp-menu-link-icon');
-  if (if_exist) {
-    var preset_color = document.querySelectorAll('.drp-menu-link-icon > a');
-    for (var h = 0; h < preset_color.length; h++) {
-      var c = preset_color[h];
-      c.addEventListener('click', function (event) {
+  // DROPDOWN MENU LINK ICON
+  var drp_menu_link_icon_exist = document.querySelectorAll('.drp-menu-link-icon');
+  if (drp_menu_link_icon_exist.length) {
+    var drp_menu_link_icon_color = document.querySelectorAll('.drp-menu-link-icon > a');
+    for (var h8 = 0; h8 < drp_menu_link_icon_color.length; h8++) {
+      var cmli = drp_menu_link_icon_color[h8];
+      cmli.addEventListener('click', function (event) {
         var targetElement = event.target;
-        if (targetElement.tagName == 'SPAN' || targetElement.tagName == 'I') {
+        if (targetElement.tagName === 'SPAN' || targetElement.tagName === 'I') {
           targetElement = targetElement.parentNode;
         }
         var temp = targetElement.getAttribute('data-value');
@@ -241,21 +205,17 @@ for (var t = 0; t < layout_btn.length; t++) {
       });
     }
   }
-  // ========================================
-});
+}
 
+// ======================= HELPER LAIN =======================
 
-
-// Functions to handle layout caption change (caption hide/show in sidebar)
 function layout_caption_change(value) {
-  // Set the attribute on the <html> element based on the value
   if (value == 'true') {
     document.getElementsByTagName('html')[0].setAttribute('data-pc-sidebar-caption', 'true');
   } else {
     document.getElementsByTagName('html')[0].setAttribute('data-pc-sidebar-caption', 'false');
   }
 
-  // Update button states to reflect the current value
   var control = document.querySelector('.theme-nav-caption .btn.active');
   if (control) {
     control.classList.remove('active');
@@ -266,9 +226,7 @@ function layout_caption_change(value) {
   }
 }
 
-// Functions to handle layout preset change (active class add/remove from preset-color according to click)
 function preset_change(value) {
-  // Set attribute based on value and update active preset color link
   document.getElementsByTagName('html')[0].setAttribute('class', value);
   var control = document.querySelector('.pct-offcanvas');
   if (control) {
@@ -277,21 +235,15 @@ function preset_change(value) {
   }
 }
 
-// Functions to handle main layout change (active class add/remove from theme-main-layout according to click)
 function main_layout_change(value) {
-  // Set the 'data-pc-layout' attribute on the <html> element based on the passed value
   document.getElementsByTagName('html')[0].setAttribute('data-pc-layout', value);
 
-  // Check if the off-canvas menu control element exists
   var control = document.querySelector('.pct-offcanvas');
   if (control) {
-    // Find and remove the 'active' class from the currently active link in the main layout section
     var activeLink = document.querySelector('.theme-main-layout > a.active');
     if (activeLink) {
       activeLink.classList.remove('active');
     }
-
-    // Find the new active link based on the value passed to the function and add the 'active' class to it
     var newActiveLink = document.querySelector(".theme-main-layout > a[data-value='" + value + "']");
     if (newActiveLink) {
       newActiveLink.classList.add('active');
@@ -299,19 +251,15 @@ function main_layout_change(value) {
   }
 }
 
-// Function to handle layout direction change (LTR/RTL)
 function layout_rtl_change(value) {
-  // Get the HTML element
   var htmlElement = document.getElementsByTagName('html')[0];
 
-  // Determine if RTL is enabled
   if (value === 'true') {
-    rtl_flag = true; // Set global RTL flag
+    rtl_flag = true;
     htmlElement.setAttribute('data-pc-direction', 'rtl');
     htmlElement.setAttribute('dir', 'rtl');
     htmlElement.setAttribute('lang', 'ar');
 
-    // Update button states for RTL
     var activeButton = document.querySelector('.theme-direction .btn.active');
     if (activeButton) {
       activeButton.classList.remove('active');
@@ -321,15 +269,14 @@ function layout_rtl_change(value) {
       rtlButton.classList.add('active');
     }
   } else {
-    rtl_flag = false; // Reset global RTL flag
+    rtl_flag = false;
     htmlElement.setAttribute('data-pc-direction', 'ltr');
     htmlElement.setAttribute('dir', 'ltr');
     htmlElement.removeAttribute('lang');
 
-    // Update button states for LTR
-    var activeButton = document.querySelector('.theme-direction .btn.active');
-    if (activeButton) {
-      activeButton.classList.remove('active');
+    var activeButton2 = document.querySelector('.theme-direction .btn.active');
+    if (activeButton2) {
+      activeButton2.classList.remove('active');
     }
     var ltrButton = document.querySelector(".theme-direction .btn[data-value='false']");
     if (ltrButton) {
@@ -338,25 +285,34 @@ function layout_rtl_change(value) {
   }
 }
 
-// Function to handle layout change (dark/light) and update related elements
+// ======================= FUNGSI UTAMA THEME =======================
 function layout_change(layout) {
-  // Set the theme layout attribute on the <html> tag
-  document.getElementsByTagName('html')[0].setAttribute('data-pc-theme', layout);
+  // normalisasi
+  if (layout !== 'dark' && layout !== 'light') {
+    layout = 'light';
+  }
 
-  // Remove the 'active' class from the default layout button if it exists
+  // SIMPAN PILIHAN USER
+  if (typeof Storage !== 'undefined') {
+    localStorage.setItem('theme', layout);
+  }
+
+  var htmlEl = document.getElementsByTagName('html')[0];
+
+  // Set atribut utama
+  htmlEl.setAttribute('data-pc-theme', layout);
+
+  // hapus 'active' di tombol default
   var btn_control = document.querySelector('.theme-layout .btn[data-value="default"]');
   if (btn_control) {
     btn_control.classList.remove('active');
   }
 
-  // Determine which logos and buttons to update based on the selected layout (dark or light)
   var isDark = layout === 'dark';
   dark_flag = isDark;
 
-  // Update the logos to match the selected layout
   var logoSrc = isDark ? '../assets/images/logo-white.svg' : '../assets/images/logo-dark.svg';
 
-  // Helper function to update a specific element's logo if it exists
   function updateLogo(selector) {
     var element = document.querySelector(selector);
     if (element) {
@@ -364,34 +320,33 @@ function layout_change(layout) {
     }
   }
 
-  // Update logos in the sidebar, navbar, auth footer, and general footer
+  // Update logos
   // updateLogo('.pc-sidebar .m-header .logo-lg');
   updateLogo('.navbar-brand .logo-lg');
   updateLogo('.auth-main.v1 .auth-sidefooter img');
   updateLogo('.auth-logo');
   updateLogo('.footer-top .footer-logo');
 
-  // Manage the active state of theme layout buttons
+  // atur tombol theme aktif
   var activeControl = document.querySelector('.theme-layout .btn.active');
   if (activeControl) {
     activeControl.classList.remove('active');
   }
 
-  // Set the correct button as active based on the layout
-  var newActiveControl = document.querySelector(`.theme-layout .btn[data-value='${isDark ? 'false' : 'true'}']`);
+  var newActiveControl = document.querySelector(
+    `.theme-layout .btn[data-value='${isDark ? 'false' : 'true'}']`
+  );
   if (newActiveControl) {
     newActiveControl.classList.add('active');
   }
 }
 
-// Function to toggle box container class based on value (true/false)
+// ======================= LAIN-LAIN =======================
 function change_box_container(value) {
-  // Check if the main content area exists
   var contentElement = document.querySelector('.pc-content');
   var footerElement = document.querySelector('.footer-wrapper');
 
   if (contentElement && footerElement) {
-    // Toggle classes based on the value passed
     if (value === 'true') {
       contentElement.classList.add('container');
       footerElement.classList.add('container');
@@ -402,7 +357,6 @@ function change_box_container(value) {
       footerElement.classList.add('container-fluid');
     }
 
-    // Update active button state in the theme container controls
     var activeButton = document.querySelector('.theme-container .btn.active');
     if (activeButton) {
       activeButton.classList.remove('active');
@@ -415,12 +369,14 @@ function change_box_container(value) {
   }
 }
 
-// ===================
 function layout_theme_sidebar_change(value) {
   if (value == 'true') {
     document.getElementsByTagName('html')[0].setAttribute('data-pc-sidebar_theme', 'true');
     if (document.querySelector('.pc-sidebar .m-header .logo-lg')) {
-      document.querySelector('.pc-sidebar .m-header .logo-lg').setAttribute('src', '../assets/images/logo-dark.svg');
+      document.querySelector('.pc-sidebar .m-header .logo-lg').setAttribute(
+        'src',
+        '../assets/images/logo-dark.svg'
+      );
     }
     var control = document.querySelector('.theme-nav-layout .btn.active');
     if (control) {
@@ -430,15 +386,19 @@ function layout_theme_sidebar_change(value) {
   } else {
     document.getElementsByTagName('html')[0].setAttribute('data-pc-sidebar_theme', 'false');
     if (document.querySelector('.pc-sidebar .m-header .logo-lg')) {
-      document.querySelector('.pc-sidebar .m-header .logo-lg').setAttribute('src', '../assets/images/logo-white.svg');
+      document.querySelector('.pc-sidebar .m-header .logo-lg').setAttribute(
+        'src',
+        '../assets/images/logo-white.svg'
+      );
     }
-    var control = document.querySelector('.theme-nav-layout .btn.active');
-    if (control) {
+    var control2 = document.querySelector('.theme-nav-layout .btn.active');
+    if (control2) {
       document.querySelector('.theme-nav-layout .btn.active').classList.remove('active');
       document.querySelector(".theme-nav-layout .btn[data-value='false']").classList.add('active');
     }
   }
 }
+
 function header_change(value) {
   document.getElementsByTagName('html')[0].setAttribute('data-pc-header', value);
   var control = document.querySelector('.pct-offcanvas');
