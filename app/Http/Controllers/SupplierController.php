@@ -11,7 +11,7 @@ class SupplierController extends Controller
 {
     $perPage = $request->get('per_page', 3);
 
-    $suppliers = Supplier::orderBy('id', 'desc')
+    $suppliers = Supplier::orderBy('id', 'asc')
         ->paginate($perPage)
         ->withQueryString();
 
@@ -44,7 +44,7 @@ class SupplierController extends Controller
 
     public function show(Supplier $supplier)
     {
-        return view('suppliers.show', compact('supplier'));
+      
     }
 
     public function edit(Supplier $supplier)
