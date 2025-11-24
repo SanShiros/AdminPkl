@@ -101,6 +101,12 @@
             <span class="pc-mtext">Suppliers</span>
           </a>
         </li>
+        <li class="pc-item pc-hasmenu">
+          <a href="{{ route('sales.index') }}" class="pc-link">
+            <span class="pc-micon"><i data-feather="feather"></i></span>
+            <span class="pc-mtext">Seles</span>
+          </a>
+        </li>
         <li class="pc-item pc-caption">
           <label>Pages</label>
           <i data-feather="monitor"></i>
@@ -227,12 +233,12 @@
         <i data-feather="settings"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
-        <a href="https://chat.whatsapp.com/BYiNrHnIg7K7elVHvwhrUd?mode=hqrt2" 
-        class="dropdown-item" 
+        <a href="https://chat.whatsapp.com/BYiNrHnIg7K7elVHvwhrUd?mode=hqrt2"
+        class="dropdown-item"
         target="_blank">
          <i class="ti ti-headset"></i>
          <span>Support</span>
-     </a>     
+     </a>
         <a href="{{ route('logout') }}" class="dropdown-item">
           <i class="ti ti-power"></i>
           <span>Logout</span>

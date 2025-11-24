@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SalesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'showLogin'])->name('login');
@@ -25,3 +26,4 @@ Route::resource('suppliers', SupplierController::class);
 Route::resource('categories', CategoryController::class);
 
 Route::resource('products', ProductController::class);
+Route::resource('sales', SalesController::class);
