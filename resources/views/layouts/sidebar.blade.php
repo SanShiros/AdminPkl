@@ -84,9 +84,9 @@
           <i data-feather="feather"></i>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="" class="pc-link">
+          <a href="{{ route('products.index') }}" class="pc-link">
             <span class="pc-micon"> <i data-feather="edit"></i></span>
-            <span class="pc-mtext">Color</span>
+            <span class="pc-mtext">Produk</span>
           </a>
         </li>
         <li class="pc-item pc-hasmenu">

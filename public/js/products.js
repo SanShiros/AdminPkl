@@ -1,27 +1,24 @@
 // ===============================
-// SUPPLIERS PAGE SCRIPT
+// PRODUCTS PAGE SCRIPT
 // ===============================
 document.addEventListener("DOMContentLoaded", function () {
-    // ELEMENT UTAMA
-    const menu = document.getElementById("supplierContextMenu");
-    const editBtn = document.getElementById("supplier-context-edit");
-    const deleteBtn = document.getElementById("supplier-context-delete");
+    const menu = document.getElementById("productContextMenu");
+    const editBtn = document.getElementById("product-context-edit");
+    const deleteBtn = document.getElementById("product-context-delete");
 
-    const modalCreate = document.getElementById("modalCreateSupplier");
-    const modalEdit = document.getElementById("modalEditSupplier");
-    const openCreateBtn = document.getElementById("btnOpenCreateSupplier");
-    const editForm = document.getElementById("formEditSupplier");
+    const modalCreate = document.getElementById("modalCreateProduct");
+    const modalEdit = document.getElementById("modalEditProduct");
+    const openCreateBtn = document.getElementById("btnOpenCreateProduct");
+    const editForm = document.getElementById("formEditProduct");
 
-    const searchInput = document.getElementById("supplier-search");
-    const perPageSelect = document.getElementById("per-page-select");
+    const searchInput = document.getElementById("product-search");
+    const perPageSelect = document.getElementById("per-page-select-products");
 
-    const rows = document.querySelectorAll(".supplier-row");
+    const rows = document.querySelectorAll(".product-row");
 
     let selectedRow = null;
 
-    // ===============================
-    // HELPER MODAL
-    // ===============================
+    // MODAL HELPERS
     function openModal(modal) {
         if (!modal) return;
         modal.classList.remove("d-none");
@@ -32,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add("d-none");
     }
 
-    // tombol close di semua modal
     document.querySelectorAll("[data-close-modal]").forEach((btn) => {
         btn.addEventListener("click", function () {
             closeModal(modalCreate);
@@ -40,9 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ===============================
     // CREATE MODAL
-    // ===============================
     if (openCreateBtn && modalCreate) {
         openCreateBtn.addEventListener("click", function () {
             const form = modalCreate.querySelector("form");
@@ -51,10 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ===============================
-    // CONTEXT MENU (DIBUKA DARI BLADE)
-    // ===============================
-    window.openSupplierContext = function (event, row) {
+    // CONTEXT MENU
+    window.openProductContext = function (event, row) {
         event.preventDefault();
         selectedRow = row;
 
@@ -65,54 +57,51 @@ document.addEventListener("DOMContentLoaded", function () {
         menu.style.display = "block";
     };
 
-    // klik di luar menu -> tutup
     document.addEventListener("click", function (e) {
-        if (!e.target.closest("#supplierContextMenu")) {
+        if (!e.target.closest("#productContextMenu")) {
             if (menu) menu.style.display = "none";
         }
     });
 
-    // ===============================
-    // EDIT DARI CONTEXT MENU
-    // ===============================
+    // EDIT FROM CONTEXT MENU
     if (editBtn && modalEdit && editForm) {
         editBtn.addEventListener("click", function () {
             if (!selectedRow) return;
 
             const id = selectedRow.dataset.id;
-            const nama = selectedRow.dataset.nama || "";
-            const alamat = selectedRow.dataset.alamat || "";
-            const telepon = selectedRow.dataset.telepon || "";
-            const email = selectedRow.dataset.email || "";
 
-            // SET ACTION FORM (sesuai route resource: suppliers.update)
-            // Kalau route-mu ada prefix (misal /admin/suppliers), ganti di sini.
-            editForm.action = "/suppliers/" + id;
+            const namaProduk = selectedRow.dataset.nama_produk || "";
+            const sku = selectedRow.dataset.sku || "";
+            const idKategori = selectedRow.dataset.id_kategori || "";
+            const idSupplierDefault = selectedRow.dataset.id_supplier_default || "";
+            const stok = selectedRow.dataset.stok || 0;
+            const hargaBeli = selectedRow.dataset.harga_beli_terakhir || "";
+            const hargaJual = selectedRow.dataset.harga_jual || "";
 
-            const namaField = editForm.querySelector(
-                'input[name="nama_supplier"]'
-            );
-            const alamatField = editForm.querySelector(
-                'textarea[name="alamat"]'
-            );
-            const teleponField = editForm.querySelector(
-                'input[name="telepon"]'
-            );
-            const emailField = editForm.querySelector('input[name="email"]');
+            editForm.action = "/products/" + id;
 
-            if (namaField) namaField.value = nama;
-            if (alamatField) alamatField.value = alamat;
-            if (teleponField) teleponField.value = telepon;
-            if (emailField) emailField.value = email;
+            const namaField = editForm.querySelector('input[name="nama_produk"]');
+            const skuField = editForm.querySelector('input[name="sku"]');
+            const kategoriSelect = editForm.querySelector('select[name="id_kategori"]');
+            const supplierSelect = editForm.querySelector('select[name="id_supplier_default"]');
+            const stokField = editForm.querySelector('input[name="stok"]');
+            const hargaBeliField = editForm.querySelector('input[name="harga_beli_terakhir"]');
+            const hargaJualField = editForm.querySelector('input[name="harga_jual"]');
+
+            if (namaField) namaField.value = namaProduk;
+            if (skuField) skuField.value = sku;
+            if (kategoriSelect) kategoriSelect.value = idKategori;
+            if (supplierSelect) supplierSelect.value = idSupplierDefault || "";
+            if (stokField) stokField.value = stok;
+            if (hargaBeliField) hargaBeliField.value = hargaBeli;
+            if (hargaJualField) hargaJualField.value = hargaJual;
 
             if (menu) menu.style.display = "none";
             openModal(modalEdit);
         });
     }
 
-    // ===============================
-    // DELETE DARI CONTEXT MENU
-    // ===============================
+    // DELETE FROM CONTEXT MENU
     if (deleteBtn) {
         deleteBtn.addEventListener("click", function () {
             if (!selectedRow) return;
@@ -122,12 +111,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (menu) menu.style.display = "none";
 
-            // pakai modal delete global (sama seperti di Category)
             if (typeof openDeleteModal === "function") {
                 openDeleteModal(deleteUrl);
             } else {
-                // fallback: confirm biasa
-                if (confirm("Yakin ingin menghapus supplier ini?")) {
+                if (confirm("Yakin ingin menghapus produk ini?")) {
                     const form = document.getElementById("context-delete-form");
                     if (form) {
                         form.action = deleteUrl;
@@ -138,9 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ===============================
     // SEARCH CLIENT-SIDE
-    // ===============================
     if (searchInput) {
         searchInput.addEventListener("input", function () {
             const term = this.value.toLowerCase();
@@ -152,9 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ===============================
     // ROWS PER PAGE
-    // ===============================
     if (perPageSelect) {
         perPageSelect.addEventListener("change", function () {
             const perPage = this.value;
@@ -168,9 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// ===============================
-// FORM SUBMISSION GUARD (anti double submit)
-// ===============================
+// ANTI DOUBLE SUBMIT
 const guardedForms = document.querySelectorAll("form.prevent-multi-submit");
 
 guardedForms.forEach((form) => {

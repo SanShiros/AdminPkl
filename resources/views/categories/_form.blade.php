@@ -5,8 +5,7 @@
         name="nama"
         class="form-control"
         value="{{ old('nama', $category->nama ?? '') }}"
-        required
-    >
+        required >
 </div>
 
 <div class="mb-3">

@@ -12,4 +12,10 @@ class Supplier extends Model
         'telepon',
         'email'
     ];
+
+     public function products()
+    {
+        // FK di products = id_supplier_default, PK local = id
+        return $this->hasMany(Product::class, 'id_supplier_default', 'id');
+    }   
 }
