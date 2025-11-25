@@ -1,0 +1,237 @@
+/* === CUSTOM SUPPLIER STYLES === */
+
+.table-modern thead tr {
+    background: #f6f7fb;
+    border-bottom: 1px solid #e2e4f0;
+}
+
+.table-modern thead th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #8b8fa3;
+    border-bottom: none !important;
+}
+
+.table-modern tbody tr {
+    cursor: pointer;
+}
+
+.table-modern tbody tr:hover {
+    background: #f9fafc;
+}
+
+.context-menu {
+    position: absolute;
+    min-width: 140px;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    padding: 4px 0;
+    display: none;
+    z-index: 9999;
+}
+
+.context-menu.show {
+    display: block;
+}
+
+.context-menu .context-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 6px 12px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+}
+
+.context-menu .context-item:hover {
+    background: #f1f5f9;
+}
+
+.footSup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.SecL {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 8px;
+}
+
+.filterBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #d1d5e0;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchWrap {
+    position: relative;
+    flex: 1;
+}
+
+.myiconG {
+    font-size: 5px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.searchInput {
+    width: 30%;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #d1d5e0;
+    background: #f9fafb;
+    padding-left: 34px;
+    font-size: 14px;
+}
+
+.searchInput:focus {
+    border-color: #8290ad !important;
+    outline: none;
+}
+
+.btnAddCustomer {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 20px;
+    border-radius: 5px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btnAddCustomer:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.paginationBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.rightInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.rowsSelect {
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    padding: 0 24px 0 10px;
+}
+
+.pageInfo {
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.pageArrows {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pageBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #6b7280;
+}
+
+.pageBtn:hover {
+    background: #f3f4f6;
+}
+
+.disabledBtn {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.custom-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.custom-modal-dialog {
+    width: 100%;
+    max-width: 600px;
+}
+
+.custom-modal-backdrop.d-none {
+    display: none;
+}
+
+/* default (light) – biarkan seperti sekarang */
+.context-menu {
+    position: absolute;
+    min-width: 140px;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    padding: 4px 0;
+    display: none;
+    z-index: 9999;
+}
+
+/* HOVER di light mode */
+.context-menu .context-item:hover {
+    background: #f1f5f9;
+}
+
+/* ====== DARK MODE KHUSUS CONTEXT MENU ====== */
+html[data-pc-theme="dark"] .context-menu {
+    background: #111827;               /* panel gelap */
+    border: 1px solid #4b5563;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+}
+
+html[data-pc-theme="dark"] .context-menu .context-item {
+    color: #e5e7eb;
+}
+
+html[data-pc-theme="dark"] .context-menu .context-item.text-danger {
+    color: #fecaca;
+}
+
+html[data-pc-theme="dark"] .context-menu .context-item:hover {
+    background: #374151;
+}

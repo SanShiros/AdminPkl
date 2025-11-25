@@ -27,3 +27,7 @@ Route::resource('categories', CategoryController::class);
 
 Route::resource('products', ProductController::class);
 Route::resource('sales', SalesController::class);
+
+Route::get('/item', function() {
+    return view('sales_item.index');
+});
