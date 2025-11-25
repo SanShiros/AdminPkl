@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('kode_nota');
             $table->dateTime('tanggal');
-            
+
             $table->decimal('total', 15, 2)->default(0);
             $table->decimal('bayar', 15, 2)->default(0);
             $table->decimal('kembalian', 15, 2)->default(0);
@@ -27,6 +27,15 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
 
+            $table->timestamps();
+        });
+
+        Schema::create('sales_products', function (Blueprint $table) {
+            $table->foreignId('id_sale')->constrained('sales')->onDelete('cascade');
+            $table->foreignId('id_product')->constrained('products')->onDelete('cascade');
+            $table->decimal('subtotal');
+            $table->decimal('harga_jual');
+            $table->integer('qty');
             $table->timestamps();
         });
     }
