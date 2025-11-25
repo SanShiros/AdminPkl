@@ -27,21 +27,26 @@
 
                     <div class="searchWrap">
                         <span class="searchIcon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                 class="myiconG">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="myiconG">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </span>
-                        <input type="text" id="sale-search" class="searchInput" placeholder="Search kode nota atau metode...">
+                        <input type="text" id="sale-search" class="searchInput"
+                            placeholder="Search kode nota atau metode...">
                     </div>
                 </div>
 
                 <button type="button" id="btnOpenCreateSale" class="btnAddCustomer">
                     <i class="bi bi-plus-lg me-1"></i> Add sale
                 </button>
+                <a href="{{ route('sales.create') }}" class="btnAddCustomer">
+                    <i class="bi bi-plus-lg me-1"></i>
+                    Add Qr
+                </a>
+
             </div>
 
             <div class="container-fluid">
@@ -65,17 +70,13 @@
                             </thead>
                             <tbody>
                                 @forelse($sales as $index => $sale)
-                                    <tr class="sale-row"
-                                        data-id="{{ $sale->id_sales }}"
-                                        data-kode_nota="{{ $sale->kode_nota }}"
-                                        data-tanggal="{{ $sale->tanggal }}"
-                                        data-total="{{ $sale->total }}"
-                                        data-bayar="{{ $sale->bayar }}"
+                                    <tr class="sale-row" data-id="{{ $sale->id_sales }}"
+                                        data-kode_nota="{{ $sale->kode_nota }}" data-tanggal="{{ $sale->tanggal }}"
+                                        data-total="{{ $sale->total }}" data-bayar="{{ $sale->bayar }}"
                                         data-kembalian="{{ $sale->kembalian }}"
                                         data-metode_bayar="{{ $sale->metode_bayar }}"
-                                        data-delete-url="{{ route('sales.destroy', $sale->id_sales) }}"
-                                        oncontextmenu="openSaleContext(event, this)"
-                                        onclick="openSaleContext(event, this)">
+                                        data-delete-url="{{ route('sales.destroy', ['sale' => $sale->id_sale]) }}"
+                                        oncontextmenu="openSaleContext(event, this)" onclick="openSaleContext(event, this)">
                                         <td>{{ $sales->firstItem() + $index }}</td>
                                         <td>{{ $sale->kode_nota }}</td>
                                         <td>{{ \Carbon\Carbon::parse($sale->tanggal)->format('Y-m-d H:i') }}</td>
@@ -85,7 +86,9 @@
                                         <td>{{ $sale->metode_bayar }}</td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="7" class="text-center py-4">Belum ada data sales.</td></tr>
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4">Belum ada data sales.</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -93,7 +96,7 @@
 
                     <div class="paginationBar">
                         <div class="leftInfo">
-                            @if($sales->total() > 0)
+                            @if ($sales->total() > 0)
                                 {{ $sales->firstItem() }}–{{ $sales->lastItem() }} of {{ $sales->total() }}
                             @else
                                 0 of 0
@@ -104,8 +107,9 @@
                             <div class="d-flex align-items-center gap-2">
                                 <span>Rows per page:</span>
                                 <select id="per-page-select-sales" class="rowsSelect">
-                                    @foreach ([3,6,9] as $size)
-                                        <option value="{{ $size }}" {{ request('per_page', 6) == $size ? 'selected' : '' }}>
+                                    @foreach ([3, 6, 9] as $size)
+                                        <option value="{{ $size }}"
+                                            {{ request('per_page', 6) == $size ? 'selected' : '' }}>
                                             {{ $size }}
                                         </option>
                                     @endforeach
@@ -119,12 +123,14 @@
                                 @if ($sales->onFirstPage())
                                     <button class="pageBtn disabledBtn">◀</button>
                                 @else
-                                    <a href="{{ $sales->appends(['per_page' => $perPage])->previousPageUrl() }}" class="pageBtn">◀</a>
+                                    <a href="{{ $sales->appends(['per_page' => $perPage])->previousPageUrl() }}"
+                                        class="pageBtn">◀</a>
                                 @endif
 
                                 {{-- next --}}
                                 @if ($sales->hasMorePages())
-                                    <a href="{{ $sales->appends(['per_page' => $perPage])->nextPageUrl() }}" class="pageBtn">▶</a>
+                                    <a href="{{ $sales->appends(['per_page' => $perPage])->nextPageUrl() }}"
+                                        class="pageBtn">▶</a>
                                 @else
                                     <button class="pageBtn disabledBtn">▶</button>
                                 @endif
@@ -138,8 +144,10 @@
 
     {{-- CONTEXT MENU --}}
     <div id="saleContextMenu" class="context-menu">
-        <button type="button" class="context-item" id="sale-context-edit"><i class="bi bi-pencil-square me-2"></i> Edit</button>
-        <button type="button" class="context-item text-danger" id="sale-context-delete"><i class="bi bi-trash3 me-2"></i> Delete</button>
+        <button type="button" class="context-item" id="sale-context-edit"><i class="bi bi-pencil-square me-2"></i>
+            Edit</button>
+        <button type="button" class="context-item text-danger" id="sale-context-delete"><i class="bi bi-trash3 me-2"></i>
+            Delete</button>
     </div>
 
     <form id="context-delete-form" method="POST" style="display:none;">

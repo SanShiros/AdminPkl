@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id('id_sales'); // PK
+            $table->id('id_sale'); // PK
 
             $table->string('kode_nota');
             $table->dateTime('tanggal');
@@ -31,8 +31,8 @@ return new class extends Migration
         });
 
         Schema::create('sales_products', function (Blueprint $table) {
-            $table->foreignId('id_sale')->constrained('sales')->onDelete('cascade');
-            $table->foreignId('id_product')->constrained('products')->onDelete('cascade');
+            $table->foreignId('id_sale')->constrained('sales','id_sale')->onDelete('cascade');
+            $table->foreignId('id_product')->constrained('products','id_produk')->onDelete('cascade');
             $table->decimal('subtotal');
             $table->decimal('harga_jual');
             $table->integer('qty');
@@ -45,6 +45,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('sales_products');
         Schema::dropIfExists('sales');
     }
 };

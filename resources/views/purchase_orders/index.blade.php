@@ -3,7 +3,7 @@
 @section('content')
     <!-- CSS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/products.css') }}"><!-- atau pakai suppliers.css dulu -->
+    <link rel="stylesheet" href="{{ asset('css/purchase_orders.css') }}">
 
     <div class="pc-container">
         <div class="pc-content">
@@ -12,12 +12,12 @@
             <div class="page-header">
                 <div class="page-block">
                     <div class="page-header-title">
-                        <h5 class="mb-0 font-medium">Daftar Produk</h5>
+                        <h5 class="mb-0 font-medium">Purchase Orders</h5>
                     </div>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/dashboard/index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Products</a></li>
-                        <li class="breadcrumb-item" aria-current="page">List</li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Purchase</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Orders</li>
                     </ul>
                 </div>
             </div>
@@ -25,37 +25,36 @@
             <div class="footSup">
                 {{-- KIRI: ICON + SEARCH --}}
                 <div class="SecL">
-                    {{-- icon filter (opsional) --}}
                     <button type="button" class="filterBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                         </svg>
                     </button>
 
-                    {{-- search --}}
+                    {{-- SEARCH --}}
                     <div class="searchWrap">
                         <span class="searchIcon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="myiconG">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="myiconG">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </span>
-                        <input type="text" id="product-search" class="searchInput" placeholder="Search...">
+                        <input type="text" id="po-search" class="searchInput" placeholder="Search...">
                     </div>
                 </div>
 
-                {{-- KANAN: ADD PRODUCT (BUKA MODAL) --}}
-                <button type="button" id="btnOpenCreateProduct" class="btnAddCustomer">
+                {{-- KANAN: ADD PO --}}
+                <button type="button" id="btnOpenCreatePO" class="btnAddCustomer">
                     <i class="bi bi-plus-lg me-1"></i>
-                    Add product
+                    Add PO
                 </button>
             </div>
 
             <div class="container-fluid">
+
                 {{-- ALERT SUCCESS --}}
                 @if (session('success'))
                     <div class="alert alert-success">
@@ -63,63 +62,86 @@
                     </div>
                 @endif
 
-                {{-- TABEL PRODUCT --}}
+
+                {{-- TABEL PURCHASE ORDER --}}
                 <div class="card border-0 shadow-sm">
                     <div class="card-body table-responsive p-0">
-                        <table class="table mb-0 align-middle table-modern" id="product-table">
+                        <table class="table mb-0 align-middle table-modern" id="po-table">
                             <thead>
                                 <tr>
                                     <th style="width: 50px">#</th>
-                                    <th>Nama Produk</th>
-                                    <th>SKU</th>
-                                    <th>Kategori</th>
+                                    <th>Kode PO</th>
                                     <th>Supplier</th>
-                                    <th>Stok</th>
-                                    <th>Harga Jual</th>
-                                    <th>QR</th> {{-- kolom baru --}}
+                                    <th>Tanggal</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                @forelse($products as $index => $product)
-                                    <tr class="product-row" data-id="{{ $product->id_produk }}"
-                                        data-nama_produk="{{ $product->nama_produk }}" data-sku="{{ $product->sku }}"
-                                        data-id_kategori="{{ $product->id_kategori }}"
-                                        data-id_supplier_default="{{ $product->id_supplier_default }}"
-                                        data-stok="{{ $product->stok }}"
-                                        data-harga_beli_terakhir="{{ $product->harga_beli_terakhir }}"
-                                        data-harga_jual="{{ $product->harga_jual }}"
-                                        data-delete-url="{{ route('products.destroy', $product->id_produk) }}"
-                                        oncontextmenu="openProductContext(event, this)"
-                                        onclick="openProductContext(event, this)">
-                                        <td>{{ $products->firstItem() + $index }}</td>
-                                        <td>{{ $product->nama_produk }}</td>
-                                        <td>{{ $product->sku ?? '-' }}</td>
-                                        <td>{{ $product->category->nama ?? '-' }}</td>
-                                        <td>{{ $product->supplier->nama_supplier ?? '-' }}</td>
-                                        <td>{{ $product->stok }}</td>
-                                        <td>Rp {{ number_format($product->harga_jual, 0, ',', '.') }}</td>
+
+                                @forelse($purchaseOrders as $index => $po)
+                                    <tr class="po-row" data-id="{{ $po->id }}" data-kode_po="{{ $po->kode_po }}"
+                                        data-id_supplier="{{ $po->id_supplier }}" data-tanggal="{{ $po->tanggal }}"
+                                        data-total="{{ (int) $po->total }}" data-status="{{ strtolower($po->status) }}"
+                                        data-delete-url="{{ route('purchase_orders.destroy', $po->id) }}"
+                                        oncontextmenu="openPOContext(event, this)" onclick="openPOContext(event, this)">
+
+                                        <td>{{ $purchaseOrders->firstItem() + $index }}</td>
+
+                                        {{-- BADGE KODE PO --}}
+                                        <td>
+                                            <a href="#" class="po-code-badge">
+                                                {{ $po->kode_po }}
+                                            </a>
+                                        </td>
+
+                                        <td>{{ $po->supplier->nama_supplier ?? '-' }}</td>
+
+                                        <td>{{ \Carbon\Carbon::parse($po->tanggal)->format('d-m-Y') }}</td>
+
+                                        <td>Rp {{ number_format($po->total, 0, ',', '.') }}</td>
+
+                                        {{-- STATUS PILL --}}
+                                        @php
+                                            $status = strtolower($po->status);
+                                            $statusClass = match ($status) {
+                                                'purchase' => 'status-pending',
+                                                'selesai' => 'status-done',
+                                                'draft' => 'status-other',
+                                                default => 'status-other',
+                                            };
+                                        @endphp
+
+                                        <td>
+                                            <span class="status-pill {{ $statusClass }}">
+                                                {{ ucfirst($status) }}
+                                            </span>
+                                        </td>
+
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center py-4">Belum ada data produk.</td>
+                                        <td colspan="6" class="text-center py-4">Belum ada purchase order.</td>
                                     </tr>
                                 @endforelse
+
+
                             </tbody>
                         </table>
                     </div>
 
+
+                    {{-- PAGINATION --}}
                     <div class="paginationBar">
-                        {{-- KIRI: INFO JUMLAH DATA --}}
                         <div class="leftInfo">
-                            {{ $products->firstItem() }}–{{ $products->lastItem() }} of {{ $products->total() }}
+                            {{ $purchaseOrders->firstItem() }}–{{ $purchaseOrders->lastItem() }}
+                            of {{ $purchaseOrders->total() }}
                         </div>
 
-                        {{-- KANAN: ROWS PER PAGE + PAGE + ARROW --}}
                         <div class="rightInfo">
                             <div class="d-flex align-items-center gap-2">
                                 <span>Rows per page:</span>
-                                <select id="per-page-select-products" class="rowsSelect">
+                                <select id="per-page-select-po" class="rowsSelect">
                                     @foreach ([3, 6, 9] as $size)
                                         <option value="{{ $size }}"
                                             {{ request('per_page', 3) == $size ? 'selected' : '' }}>
@@ -130,12 +152,13 @@
                             </div>
 
                             <span class="pageInfo">
-                                {{ $products->currentPage() }}/{{ $products->lastPage() }}
+                                {{ $purchaseOrders->currentPage() }}/{{ $purchaseOrders->lastPage() }}
                             </span>
 
                             <div class="pageArrows">
+
                                 {{-- PREV --}}
-                                @if ($products->onFirstPage())
+                                @if ($purchaseOrders->onFirstPage())
                                     <button class="pageBtn disabledBtn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -145,7 +168,7 @@
                                         </svg>
                                     </button>
                                 @else
-                                    <a href="{{ $products->appends(['per_page' => $perPage])->previousPageUrl() }}"
+                                    <a href="{{ $purchaseOrders->appends(['per_page' => $perPage])->previousPageUrl() }}"
                                         class="pageBtn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -157,8 +180,8 @@
                                 @endif
 
                                 {{-- NEXT --}}
-                                @if ($products->hasMorePages())
-                                    <a href="{{ $products->appends(['per_page' => $perPage])->nextPageUrl() }}"
+                                @if ($purchaseOrders->hasMorePages())
+                                    <a href="{{ $purchaseOrders->appends(['per_page' => $perPage])->nextPageUrl() }}"
                                         class="pageBtn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -177,44 +200,50 @@
                                         </svg>
                                     </button>
                                 @endif
+
+
                             </div>
                         </div>
                     </div>
-                </div> {{-- card --}}
-            </div> {{-- container-fluid --}}
-        </div> {{-- pc-content --}}
-    </div> {{-- pc-container --}}
 
-    {{-- CONTEXT MENU KLIK KANAN PRODUCT --}}
-    <div id="productContextMenu" class="context-menu">
-        <button type="button" class="context-item" id="product-context-edit">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    {{-- CONTEXT MENU --}}
+    <div id="poContextMenu" class="context-menu">
+        <button type="button" class="context-item" id="po-context-edit">
             <i class="bi bi-pencil-square me-2"></i> Edit
         </button>
 
-        <button type="button" class="context-item text-danger" id="product-context-delete">
+        <button type="button" class="context-item text-danger" id="po-context-delete">
             <i class="bi bi-trash3 me-2"></i> Delete
         </button>
     </div>
 
-    {{-- FORM DELETE GLOBAL --}}
     <form id="context-delete-form" method="POST" style="display: none;">
         @csrf
         @method('DELETE')
     </form>
 
-    {{-- MODAL CREATE PRODUCT --}}
-    <div id="modalCreateProduct" class="custom-modal-backdrop d-none">
+
+    {{-- MODAL CREATE --}}
+    <div id="modalCreatePO" class="custom-modal-backdrop d-none">
         <div class="custom-modal-dialog">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Tambah Produk</h5>
+                    <h5 class="mb-0">Tambah Purchase Order</h5>
                     <button type="button" class="btn-close" data-close-modal>&times;</button>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('products.store') }}" method="POST" class="prevent-multi-submit">
+                    <form action="{{ route('purchase_orders.store') }}" method="POST" class="prevent-multi-submit">
                         @csrf
-                        @php($product = null)
-                        @include('products._form')
+                        @php($purchaseOrder = null)
+                        @include('purchase_orders._form')
+
                         <div class="mt-3 d-flex justify-content-end gap-2">
                             <button type="button" class="btn btn-secondary" data-close-modal>Batal</button>
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -225,20 +254,23 @@
         </div>
     </div>
 
-    {{-- MODAL EDIT PRODUCT --}}
-    <div id="modalEditProduct" class="custom-modal-backdrop d-none">
+
+    {{-- MODAL EDIT --}}
+    <div id="modalEditPO" class="custom-modal-backdrop d-none">
         <div class="custom-modal-dialog">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Edit Produk</h5>
+                    <h5 class="mb-0">Edit Purchase Order</h5>
                     <button type="button" class="btn-close" data-close-modal>&times;</button>
                 </div>
                 <div class="card-body">
-                    <form id="formEditProduct" method="POST" class="prevent-multi-submit">
+                    <form id="formEditPO" method="POST" class="prevent-multi-submit">
                         @csrf
                         @method('PUT')
-                        @php($product = null)
-                        @include('products._form')
+
+                        @php($purchaseOrder = null)
+                        @include('purchase_orders._form')
+
                         <div class="mt-3 d-flex justify-content-end gap-2">
                             <button type="button" class="btn btn-secondary" data-close-modal>Batal</button>
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -250,6 +282,5 @@
         </div>
     </div>
 
-    <!-- JS eksternal -->
-    <script src="{{ asset('js/products.js') }}"></script>
+    <script src="{{ asset('js/purchase_orders.js') }}"></script>
 @endsection

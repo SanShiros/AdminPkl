@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -117,4 +118,71 @@ class ProductController extends Controller
             ->with('success', 'Produk berhasil dihapus.');
     }
     }
+
+    public function qrInline(Product $product)
+{
+    if (! $product->sku) {
+        abort(404, 'Produk tidak punya SKU');
+    }
+
+    $png = QrCode::format('png')
+        ->size(200)
+        ->margin(1)
+        ->generate($product->sku);
+
+    return response($png)->header('Content-Type', 'image/png');
+}
+
+public function qrLabel(Product $product)
+{
+    if (! $product->sku) {
+        abort(404, 'Produk tidak punya SKU');
+    }
+
+    // QR untuk embed di blade
+    $pngData = base64_encode(
+        QrCode::format('png')->size(300)->margin(1)->generate($product->sku)
+    );
+
+    return view('products.qr_label', compact('product', 'pngData'));
+}
+
+public function downloadPng(Product $product)
+{
+    if (! $product->sku) {
+        return back()->with('error', 'Produk belum memiliki SKU, tidak bisa buat QR.');
+    }
+
+    $png = QrCode::format('png')
+        ->size(400)
+        ->margin(1)
+        ->generate($product->sku);
+
+    $fileName = 'QR-'.$product->sku.'.png';
+
+    return response($png)
+        ->header('Content-Type', 'image/png')
+        ->header('Content-Disposition', 'attachment; filename="'.$fileName.'"');
+}
+
+public function downloadPdf(Product $product)
+{
+    if (! $product->sku) {
+        return back()->with('error', 'Produk belum memiliki SKU, tidak bisa buat QR.');
+    }
+
+    // generate base64 png
+    $pngData = base64_encode(
+        QrCode::format('png')->size(300)->margin(1)->generate($product->sku)
+    );
+
+    // simple HTML label, nanti diprint sebagai PDF oleh browser/user
+    $html = view('products.qr_label_pdf', [
+        'product' => $product,
+        'pngData' => $pngData,
+    ])->render();
+
+    return response($html);
+}
+
 }

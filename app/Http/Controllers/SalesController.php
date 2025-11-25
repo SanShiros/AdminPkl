@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Sales;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,18 +15,22 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = Sales::with('user')->orderBy('id_sales', 'DESC')->paginate(10);
+        $sales = Sales::with('user')->orderBy('id_sale', 'DESC')->paginate(10);
         return view('sales.index', compact('sales'));
     }
 
     /**
      * Halaman create sales
      */
-    public function create()
-    {
-        $users = User::all();
-        return view('sales.create', compact('users'));
-    }
+   public function create()
+{
+    $users = User::all();
+    $products = Product::all();
+    $defaultKodeNota = 'SL-' . now()->format('YmdHis');
+
+    return view('sales.create', compact('users', 'products', 'defaultKodeNota'));
+}
+
 
     /**
      * Simpan sales baru
@@ -51,7 +56,8 @@ class SalesController extends Controller
         $id_qty = array_column($keranjang, 'qty', 'id');
         $itemIds = array_keys($id_qty);
         // I hate hate hate hate hate hate hate hate 
-        $existingItemIds = Item::whereIn('id', $itemIds)->pluck('id')->toArray();
+        $existingItemIds = Product::whereIn('id_produk', $itemIds)->pluck('id_produk')->toArray();
+
         $missingItems = array_diff($itemIds, $existingItemIds);
 
         if (!empty($missingItems)) {
@@ -71,11 +77,11 @@ class SalesController extends Controller
         $pivot = [];
         foreach ($keranjang as $item) {
             $pivot[] = [
-                'id_product' => $item['id'],
-                'id_sale' => $sale->id,
-                'qty' => $item['qty'],
-                'subtotal' => $item['qty'] * $item['harga_jual'],
-                'harga_jual' => $item['harga_jual'],
+                'id_product'  => $item['id'],              // ini = id_produk dari JS
+                'id_sale'     => $sale->id_sale,
+                'qty'         => $item['qty'],
+                'subtotal'    => $item['qty'] * $item['harga_jual'],
+                'harga_jual'  => $item['harga_jual'],
             ];
         }
 
@@ -103,7 +109,7 @@ class SalesController extends Controller
         $sale = Sales::findOrFail($id);
 
         $request->validate([
-            'kode_nota'     => 'required|string|max:50|unique:sales,kode_nota,' . $id . ',id_sales',
+            'kode_nota' => 'required|string|max:50|unique:sales,kode_nota,' . $id . ',id_sale',
             'tanggal'       => 'required|date',
             'total'         => 'required|numeric|min:0',
             'bayar'         => 'required|numeric|min:0',

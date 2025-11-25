@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sales extends Model
 {
     protected $table = 'sales';
-    protected $primaryKey = 'id_sales';
+   protected $primaryKey = 'id_sale';
 
     protected $fillable = [
         'kode_nota',
@@ -24,8 +24,11 @@ class Sales extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function product()
-    {
-        return $this->belongsToMany(Product::class);
-    }
+  public function products()
+{
+    return $this->belongsToMany(Product::class, 'sales_products', 'id_sale', 'id_product')
+        ->withPivot(['qty', 'subtotal', 'harga_jual'])
+        ->withTimestamps();
+}
+
 }
