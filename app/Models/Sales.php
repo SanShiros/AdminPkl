@@ -23,4 +23,9 @@ class Sales extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function product()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

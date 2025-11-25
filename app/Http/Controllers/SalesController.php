@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sales;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
@@ -38,13 +39,26 @@ class SalesController extends Controller
             'bayar'         => 'required|numeric|min:0',
             'kembalian'     => 'nullable|numeric|min:0',
             'metode_bayar'  => 'nullable|string|max:50',
-            'id_user'       => 'nullable|exists:users,id'
+            'id_user'       => 'nullable|exists:users,id',
+            'keranjang' => 'required|json'
         ]);
+
+        $keranjang = json_decode($request->keranjang, true);
 
         // Hitung kembalian otomatis jika tidak diinput
         $kembalian = $request->kembalian ?? ($request->bayar - $request->total);
 
-        Sales::create([
+        $id_qty = array_column($keranjang, 'qty', 'id');
+        $itemIds = array_keys($id_qty);
+        // I hate hate hate hate hate hate hate hate 
+        $existingItemIds = Item::whereIn('id', $itemIds)->pluck('id')->toArray();
+        $missingItems = array_diff($itemIds, $existingItemIds);
+
+        if (!empty($missingItems)) {
+            return redirect()->route('sales.create')->with('error', 'Item(s) no longer exist in inventory.');
+        }
+
+        $sale = Sales::create([
             'kode_nota'     => $request->kode_nota,
             'tanggal'       => $request->tanggal,
             'total'         => $request->total,
@@ -53,6 +67,19 @@ class SalesController extends Controller
             'metode_bayar'  => $request->metode_bayar,
             'id_user'       => $request->id_user
         ]);
+
+        $pivot = [];
+        foreach ($keranjang as $item) {
+            $pivot[] = [
+                'id_product' => $item['id'],
+                'id_sale' => $sale->id,
+                'qty' => $item['qty'],
+                'subtotal' => $item['qty'] * $item['harga_jual'],
+                'harga_jual' => $item['harga_jual'],
+            ];
+        }
+
+        DB::table('sales_products')->insert($pivot);
 
         return redirect()->route('sales.index')->with('success', 'Sales berhasil ditambahkan!');
     }
@@ -112,4 +139,3 @@ class SalesController extends Controller
         return redirect()->route('sales.index')->with('success', 'Sales berhasil dihapus!');
     }
 }
-
