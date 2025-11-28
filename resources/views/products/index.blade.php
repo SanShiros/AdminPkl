@@ -49,9 +49,10 @@
                 </div>
 
                 {{-- KANAN: ADD PRODUCT (BUKA MODAL) --}}
-                <button type="button" id="btnOpenCreateProduct" class="btnAddCustomer">
-                    <i class="bi bi-plus-lg me-1"></i>
-                    Add product
+              
+                <button type="button" id="" class="btnAddCustomer">
+                    <i class="bi bi-plus-lg me-1" ></i>
+                    <a href="{{ route('products.create') }}">Add Product</a>
                 </button>
             </div>
 
@@ -75,8 +76,8 @@
                                     <th>Kategori</th>
                                     <th>Supplier</th>
                                     <th>Stok</th>
+                                    <th>Harga Beli Terakhir</th>
                                     <th>Harga Jual</th>
-                                    <th>QR</th> {{-- kolom baru --}}
                                 </tr>
                             </thead>
 
@@ -98,7 +99,21 @@
                                         <td>{{ $product->category->nama ?? '-' }}</td>
                                         <td>{{ $product->supplier->nama_supplier ?? '-' }}</td>
                                         <td>{{ $product->stok }}</td>
-                                        <td>Rp {{ number_format($product->harga_jual, 0, ',', '.') }}</td>
+
+                                        <td>
+                                            @if ($product->harga_beli_terakhir)
+                                                Rp {{ number_format($product->harga_beli_terakhir, 0, ',', '.') }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            Rp {{ number_format($product->harga_jual, 0, ',', '.') }}
+                                        </td>
+
+
+
                                     </tr>
                                 @empty
                                     <tr>

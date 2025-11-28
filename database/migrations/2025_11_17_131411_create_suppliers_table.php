@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_supplier');
             $table->string('alamat')->nullable();
-            $table->string('telepon', 20)->nullable();
-            $table->string('email')->nullable();
+              $table->string('telepon', 20)->nullable(); // ← STRING
+            $table->string('email')->nullable();    
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id('id_produk');
             $table->string('nama_produk');
-            $table->string('sku')->nullable()->unique();
+            $table->string('sku')->unique();
             $table->unsignedBigInteger('id_kategori');
             $table->integer('stok')->unsigned()->default(0);
             $table->decimal('harga_beli_terakhir', 15, 2)->nullable();
@@ -23,11 +23,13 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('id_kategori')
                 ->references('id')        // PK categories = id
-                ->on('categories');
+                ->on('categories')
+                ->onDelete('cascade');
 
             $table->foreign('id_supplier_default')
                 ->references('id')        // PK suppliers = id
-                ->on('suppliers');
+                ->on('suppliers')
+                ->onDelete('cascade');
         });
     }
 

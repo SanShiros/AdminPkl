@@ -4,7 +4,6 @@
     <!-- CSS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sales.css') }}">
-
     <div class="pc-container">
         <div class="pc-content">
 
@@ -152,13 +151,14 @@
 
                                 <div class="col-md-3">
                                     <label class="form-label">Bayar</label>
-                                    <input type="number" step="0.01" name="bayar" id="bayar-input"
-                                        class="form-control @error('bayar') is-invalid @enderror"
-                                        value="{{ old('bayar', 0) }}" min="0">
+                                    <input type="text" name="bayar" id="bayar-input"
+                                        class="form-control rupiah-input @error('bayar') is-invalid @enderror"
+                                        value="{{ old('bayar', 0) }}">
                                     @error('bayar')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+
 
                                 <div class="col-md-3">
                                     <label class="form-label">Kembalian</label>
@@ -175,7 +175,6 @@
                                         <div class="text-danger small">{{ $message }}</div>
                                     @enderror
                                 </div>
-
 
                                 <div class="col-md-3">
                                     <label class="form-label">Metode Bayar</label>
@@ -208,9 +207,9 @@
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
+            </div> {{-- .container-fluid --}}
+        </div> {{-- .pc-content --}}
+    </div> {{-- .pc-container --}}
 
     {{-- JS POS --}}
     <script src="{{ asset('js/sales_pos.js') }}"></script>

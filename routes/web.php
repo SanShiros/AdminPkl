@@ -9,6 +9,8 @@ use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchaseOrderItemController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\StockMovementController;
+
 Route::get('/', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
 
@@ -38,7 +40,7 @@ Route::resource('purchase_orders', PurchaseOrderController::class);
 Route::resource('purchase_order_items', PurchaseOrderItemController::class);
 
 // Contoh route lain
-Route::get('/item', function() {
+Route::get('/item', function () {
     return view('sales_item.index');
 });
 
@@ -56,3 +58,14 @@ Route::get('products/{product}/qr/download/png', [ProductController::class, 'dow
 
 Route::get('products/{product}/qr/download/pdf', [ProductController::class, 'downloadPdf'])
     ->name('products.qr.download.pdf');   // download PDF
+
+Route::resource('sales', SalesController::class);
+
+// API kecil untuk scan QR → cari produk pakai SKU
+Route::get('/sales/product-by-sku/{sku}', [SalesController::class, 'findProductBySku'])
+    ->name('sales.productBySku');
+
+
+
+Route::get('/stock-movements', [StockMovementController::class, 'index'])
+    ->name('stock_movements.index');
