@@ -19,6 +19,10 @@ class Sales extends Model
         'id_user'
     ];
 
+    protected $casts = [
+        'tanggal' => 'datetime:Y-m-d H:i'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
