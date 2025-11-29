@@ -79,7 +79,7 @@
                                         oncontextmenu="openSaleContext(event, this)" onclick="openSaleContext(event, this)">
                                         <td>{{ $sales->firstItem() + $index }}</td>
                                         <td>{{ $sale->kode_nota }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($sale->tanggal)->format('Y-m-d H:i') }}</td>
+                                        <td>{{ $sale->tanggal }}</td>
                                         <td>Rp {{ number_format($sale->total, 0, ',', '.') }}</td>
                                         <td>Rp {{ number_format($sale->bayar, 0, ',', '.') }}</td>
                                         <td>Rp {{ number_format($sale->kembalian, 0, ',', '.') }}</td>
