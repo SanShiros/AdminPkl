@@ -33,7 +33,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-
         $categories = Category::all();
         $suppliers  = Supplier::all();
 
@@ -42,40 +41,35 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * Waktu create:
+     * - SKU WAJIB diisi (supaya bisa dipakai untuk QR & scanning)
      */
-    public function store(Request $request)
-    {
-      $validated = $request->validate([
-            'nama_produk'          => 'required|string|max:255',
-            'sku'                  => 'nullable|string|max:255|unique:products,sku',
-            'id_kategori'          => 'required|exists:categories,id',
-            'stok'                 => 'required|integer|min:0',
-            'harga_beli_terakhir'  => 'nullable|numeric|min:0',
-            'harga_jual'           => 'required|numeric|min:0',
-            'id_supplier_default'  => 'nullable|exists:suppliers,id',
-        ]);
+   public function store(Request $request)
+{
+    $validated = $request->validate([
+        'nama_produk'          => 'required|string|max:255',
+        'sku'                  => 'required|string|max:255|unique:products,sku',
+        'id_kategori'          => 'required|exists:categories,id',
+        'stok'                 => 'required|integer|min:0',
+        'harga_beli_terakhir'  => 'nullable|numeric|min:0',
+        'harga_jual'           => 'required|numeric|min:0',
+        'id_supplier_default'  => 'nullable|exists:suppliers,id',
+    ]);
 
-        Product::create($validated);
+    $product = Product::create($validated);
 
-        return redirect()
-            ->route('products.index')
-            ->with('success', 'Produk berhasil ditambahkan.');
-    }
+    return redirect()
+        ->route('products.index')
+        ->with('success', 'Produk berhasil ditambahkan.');
+}
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Product $product)
     {
-
         $categories = Category::all();
         $suppliers  = Supplier::all();
 
@@ -87,10 +81,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        
-       $validated = $request->validate([
+        $validated = $request->validate([
             'nama_produk'          => 'required|string|max:255',
-            'sku'                  => 'nullable|string|max:255|unique:products,sku,' . $product->id_produk . ',id_produk',
+            'sku'                  => 'required|string|max:255|unique:products,sku,' . $product->id_produk . ',id_produk',
             'id_kategori'          => 'required|exists:categories,id',
             'stok'                 => 'required|integer|min:0',
             'harga_beli_terakhir'  => 'nullable|numeric|min:0',
@@ -110,79 +103,82 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-    {
-          $product->delete();
+        $product->delete();
 
         return redirect()
             ->route('products.index')
             ->with('success', 'Produk berhasil dihapus.');
     }
-    }
 
+    // =======================
+    //    QR CODE FUNCTIONS
+    // =======================
+
+    // 1. Tampilkan QR langsung sebagai <img src="...">
     public function qrInline(Product $product)
-{
-    if (! $product->sku) {
-        abort(404, 'Produk tidak punya SKU');
+    {
+        if (! $product->sku) {
+            abort(404, 'Produk tidak punya SKU');
+        }
+
+        $png = QrCode::format('png')
+            ->size(200)
+            ->margin(1)
+            ->generate($product->sku);
+
+        return response($png)->header('Content-Type', 'image/png');
     }
 
-    $png = QrCode::format('png')
-        ->size(200)
-        ->margin(1)
-        ->generate($product->sku);
+    // 2. Halaman label untuk dicetak
+    public function qrLabel(Product $product)
+    {
+        if (! $product->sku) {
+            abort(404, 'Produk tidak punya SKU');
+        }
 
-    return response($png)->header('Content-Type', 'image/png');
-}
+        // QR untuk embed di blade (pakai base64)
+        $pngData = base64_encode(
+            QrCode::format('png')->size(300)->margin(1)->generate($product->sku)
+        );
 
-public function qrLabel(Product $product)
-{
-    if (! $product->sku) {
-        abort(404, 'Produk tidak punya SKU');
+        return view('products.qr_label', compact('product', 'pngData'));
     }
 
-    // QR untuk embed di blade
-    $pngData = base64_encode(
-        QrCode::format('png')->size(300)->margin(1)->generate($product->sku)
-    );
+    // 3. Download PNG
+    public function downloadPng(Product $product)
+    {
+        if (! $product->sku) {
+            return back()->with('error', 'Produk belum memiliki SKU, tidak bisa buat QR.');
+        }
 
-    return view('products.qr_label', compact('product', 'pngData'));
-}
+        $png = QrCode::format('png')
+            ->size(400)
+            ->margin(1)
+            ->generate($product->sku);
 
-public function downloadPng(Product $product)
-{
-    if (! $product->sku) {
-        return back()->with('error', 'Produk belum memiliki SKU, tidak bisa buat QR.');
+        $fileName = 'QR-'.$product->sku.'.png';
+
+        return response($png)
+            ->header('Content-Type', 'image/png')
+            ->header('Content-Disposition', 'attachment; filename="'.$fileName.'"');
     }
 
-    $png = QrCode::format('png')
-        ->size(400)
-        ->margin(1)
-        ->generate($product->sku);
+    // 4. "PDF" sederhana (HTML, nanti user print ke PDF)
+    public function downloadPdf(Product $product)
+    {
+        if (! $product->sku) {
+            return back()->with('error', 'Produk belum memiliki SKU, tidak bisa buat QR.');
+        }
 
-    $fileName = 'QR-'.$product->sku.'.png';
+        $pngData = base64_encode(
+            QrCode::format('png')->size(300)->margin(1)->generate($product->sku)
+        );
 
-    return response($png)
-        ->header('Content-Type', 'image/png')
-        ->header('Content-Disposition', 'attachment; filename="'.$fileName.'"');
-}
+        $html = view('products.qr_label_pdf', [
+            'product' => $product,
+            'pngData' => $pngData,
+        ])->render();
 
-public function downloadPdf(Product $product)
-{
-    if (! $product->sku) {
-        return back()->with('error', 'Produk belum memiliki SKU, tidak bisa buat QR.');
+        return response($html);
     }
-
-    // generate base64 png
-    $pngData = base64_encode(
-        QrCode::format('png')->size(300)->margin(1)->generate($product->sku)
-    );
-
-    // simple HTML label, nanti diprint sebagai PDF oleh browser/user
-    $html = view('products.qr_label_pdf', [
-        'product' => $product,
-        'pngData' => $pngData,
-    ])->render();
-
-    return response($html);
-}
-
 }

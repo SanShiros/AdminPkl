@@ -39,12 +39,10 @@
                     </div>
                 </div>
 
-                <button type="button" id="btnOpenCreateSale" class="btnAddCustomer">
-                    <i class="bi bi-plus-lg me-1"></i> Add sale
-                </button>
+              
                 <a href="{{ route('sales.create') }}" class="btnAddCustomer">
                     <i class="bi bi-plus-lg me-1"></i>
-                    Add Qr
+                    Add Sales
                 </a>
 
             </div>

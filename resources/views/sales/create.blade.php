@@ -1,18 +1,23 @@
 @extends('layouts.sidebar')
 
 @section('content')
+    <!-- CSS eksternal -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sales.css') }}">
+    <div class="pc-container">
+        <div class="pc-content">
 
-<!-- CSS eksternal -->
-<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-<link rel="stylesheet" href="{{ asset('css/sales.css') }}">
-<div class="pc-container">
-    <div class="pc-content">
-
-        {{-- HEADER / BREADCRUMB --}}
-        <div class="page-header">
-            <div class="page-block">
-                <div class="page-header-title">
-                    <h5 class="mb-0 font-medium">Tambah Sales (POS)</h5>
+            {{-- HEADER / BREADCRUMB --}}
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="page-header-title">
+                        <h5 class="mb-0 font-medium">Tambah Sales (POS)</h5>
+                    </div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/dashboard/index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Transaksi</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Tambah Sales</li>
+                    </ul>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/dashboard/index.html">Home</a></li>
@@ -213,19 +218,17 @@
                                         <div class="text-danger small">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    <div class="col-md-3">
-                                        <label class="form-label">Bayar</label>
-                                        <input type="number" step="0.01" name="bayar" id="bayar-input"
-                                            class="form-control @error('bayar') is-invalid @enderror"
-                                            value="{{ old('bayar', 0) }}" min="0">
-                                        @error('bayar')
+                                <div class="col-md-3">
+                                    <label class="form-label">Bayar</label>
+                                    <input type="text" name="bayar" id="bayar-input"
+                                        class="form-control rupiah-input @error('bayar') is-invalid @enderror"
+                                        value="{{ old('bayar', 0) }}">
+                                    @error('bayar')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    <div class="col-md-3">
-                                        <label class="form-label">Kembalian</label>
+                                <div class="col-md-3">
+                                    <label class="form-label">Kembalian</label>
 
                                         {{-- Hanya untuk tampilan (Rp xx) --}}
                                         <input type="text" id="kembalian-display" class="form-control" value="Rp 0"
@@ -239,52 +242,15 @@
                                         <div class="text-danger small">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-
-                                    <div class="col-md-3">
-                                        <label class="form-label">Metode Bayar</label>
-                                        <select name="metode_bayar"
-                                            class="form-select @error('metode_bayar') is-invalid @enderror">
-                                            <option value="Cash" {{ old('metode_bayar')=='Cash' ? 'selected' : '' }}>
-                                                Cash
-                                            </option>
-                                            <option value="Transfer" {{ old('metode_bayar')=='Transfer' ? 'selected'
-                                                : '' }}>Transfer</option>
-                                            <option value="QRIS" {{ old('metode_bayar')=='QRIS' ? 'selected' : '' }}>
-                                                QRIS
-                                            </option>
-                                        </select>
-                                        @error('metode_bayar')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    =======
-                                    <div class="card-body">
-                                        <div id="qr-reader" style="max-width: 400px;"></div>
-                                        <small class="text-muted d-block mt-2">
-                                            Setelah barcode terbaca, produk akan otomatis ditambahkan ke keranjang.
-                                        </small>
-                                        >>>>>>> Stashed changes
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- CARD: KERANJANG --}}
-                        <div class="card border-0 shadow-sm mb-3">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="mb-0">Keranjang</h6>
-                                <div class="d-flex align-items-center gap-2">
-                                    <select id="product-select" class="form-select form-select-sm"
-                                        style="min-width: 260px;">
-                                        <option value="">-- Pilih Produk --</option>
-                                        @foreach ($products as $product)
-                                        <option value="{{ $product->id_produk }}"
-                                            data-harga="{{ $product->harga_jual }}"
-                                            data-nama="{{ $product->nama_produk }}"
-                                            data-sku="{{ $product->sku ?? '' }}">
-                                            {{ $product->nama_produk }}
-                                            (SKU: {{ $product->sku ?? '-' }})
+                                <div class="col-md-3">
+                                    <label class="form-label">Metode Bayar</label>
+                                    <select name="metode_bayar"
+                                        class="form-select @error('metode_bayar') is-invalid @enderror">
+                                        <option value="Cash" {{ old('metode_bayar') == 'Cash' ? 'selected' : '' }}>Cash
+                                        </option>
+                                        <option value="Transfer"
+                                            {{ old('metode_bayar') == 'Transfer' ? 'selected' : '' }}>Transfer</option>
+                                        <option value="QRIS" {{ old('metode_bayar') == 'QRIS' ? 'selected' : '' }}>QRIS
                                         </option>
                                         @endforeach
                                     </select>
@@ -297,12 +263,10 @@
                                     </button>
                                 </div>
                             </div>
-                            <<<<<<< Updated upstream </form>
+                            </form>
                         </div>
                     </div>
                 </div>
-                =======
-                >>>>>>> Stashed changes
 
                 <div class="card-body table-responsive p-0">
                     <table class="table mb-0 align-middle table-modern" id="cart-table">
@@ -322,22 +286,18 @@
                     </table>
                 </div>
         </div>
-
-        {{-- HIDDEN KERANJANG --}}
-        <input type="hidden" name="keranjang" id="keranjang-input">
-
-        <div class="d-flex justify-content-end gap-2 mb-4">
-            <a href="{{ route('sales.index') }}" class="btn btn-secondary">
-                Batal
-            </a>
-            <button type="submit" class="btn btn-primary">
-                Simpan Transaksi
-            </button>
-        </div>
-        </form>
-    </div> {{-- .container-fluid --}}
-</div> {{-- .pc-content --}}
-</div> {{-- .pc-container --}}
+                    <div class="d-flex justify-content-end gap-2 mb-4">
+                        <a href="{{ route('sales.index') }}" class="btn btn-secondary">
+                            Batal
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            Simpan Transaksi
+                        </button>
+                    </div>
+                </form>
+            </div> {{-- .container-fluid --}}
+        </div> {{-- .pc-content --}}
+    </div> {{-- .pc-container --}}
 
 {{-- JS POS --}}
 <script src="{{ asset('js/sales_pos.js') }}"></script>
